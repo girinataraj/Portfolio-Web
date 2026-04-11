@@ -34,13 +34,13 @@ export function CTASection() {
   }, { scope: containerRef })
 
   return (
-    <section ref={containerRef} className="py-40 px-6 lg:px-12 relative overflow-hidden">
+    <section ref={containerRef} className="py-24 md:py-40 px-5 lg:px-12 relative overflow-hidden">
       <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <h2 className="cta-content text-6xl md:text-8xl font-bold tracking-tight text-white mb-8">
+        <h2 className="cta-content text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-white mb-6 md:mb-8">
           Let's Build.
         </h2>
 
-        <p className="cta-content text-xl md:text-2xl text-white/50 mb-16 max-w-2xl mx-auto font-medium tracking-wide leading-relaxed">
+        <p className="cta-content text-base md:text-xl lg:text-2xl text-white/50 mb-10 md:mb-16 max-w-2xl mx-auto font-medium tracking-wide leading-relaxed">
           Whether you have a product to engineer or a team looking for a technical partner, let's architect the future together.
         </p>
 
@@ -48,7 +48,7 @@ export function CTASection() {
           <Button
             asChild
             size="lg"
-            className="bg-white text-black hover:bg-gray-200 hover:scale-105 transition-all duration-300 font-semibold px-10 py-8 text-xl rounded-full shadow-2xl"
+            className="bg-white text-black hover:bg-gray-200 hover:scale-105 transition-all duration-300 font-semibold px-7 md:px-10 py-5 md:py-8 text-base md:text-xl rounded-full shadow-2xl w-full sm:w-auto"
           >
             <Link href="/contact">
               <Mail className="mr-3 h-5 w-5" />
@@ -60,7 +60,7 @@ export function CTASection() {
             asChild
             variant="outline"
             size="lg"
-            className="bg-transparent border border-white/20 text-white hover:bg-white/10 hover:text-white transition-all duration-300 px-10 py-8 text-xl rounded-full"
+            className="bg-transparent border border-white/20 text-white hover:bg-white/10 hover:text-white transition-all duration-300 px-7 md:px-10 py-5 md:py-8 text-base md:text-xl rounded-full w-full sm:w-auto"
           >
             <Link href="https://www.linkedin.com/in/giri765" target="_blank" rel="noopener noreferrer">
               <MessageCircle className="mr-3 h-5 w-5" />

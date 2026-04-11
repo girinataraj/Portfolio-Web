@@ -244,32 +244,33 @@ export function HeroSection() {
   // ─── Mobile Fallback ──────────────────────────────────────────────────────
   if (hydrated && isMobile) {
     return (
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden pb-24">
-        <div className="z-10 w-full max-w-sm text-center space-y-8">
-          <div className="relative w-56 h-56 mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl mb-6">
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden pb-28">
+        <div className="z-10 w-full max-w-xs text-center space-y-6">
+          {/* Profile photo */}
+          <div className="relative w-44 h-44 mx-auto rounded-full overflow-hidden border border-white/10 shadow-2xl">
             <Image
               src="/assets/Giri1.jpg"
               alt="Giri N S"
               fill
-              className="object-cover"
+              className="object-cover object-top"
               priority
             />
           </div>
 
-          <div className="space-y-3">
-            <h1 className="text-4xl font-bold tracking-tight text-white">
-              Hi, I'm Giri.
-            </h1>
-            <p className="text-lg text-white/60 font-medium">
-              I build performant systems.
-            </p>
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold tracking-tight text-white">Hi, I'm Giri.</h1>
+            <p className="text-base text-white/50 font-medium">Full-stack developer · Erode, India</p>
           </div>
 
-          <div className="flex flex-col gap-3 pt-4">
+          <p className="text-sm text-white/40 leading-relaxed">
+            I build performant systems — MERN stack, .NET, and everything in between.
+          </p>
+
+          <div className="flex flex-col gap-3 pt-2">
             <Button
               size="lg"
               onClick={scrollToProjects}
-              className="bg-white text-black hover:bg-gray-100 font-semibold py-6 text-base w-full rounded-full transition-colors"
+              className="bg-white text-black hover:bg-gray-100 font-semibold py-5 text-sm w-full rounded-full transition-colors"
             >
               View My Work
               <ArrowDown className="ml-2 h-4 w-4" />
@@ -278,7 +279,7 @@ export function HeroSection() {
               variant="outline"
               size="lg"
               asChild
-              className="border-white/20 text-white hover:bg-white/5 font-semibold py-6 text-base w-full rounded-full bg-transparent"
+              className="border-white/15 text-white/70 hover:bg-white/5 font-medium py-5 text-sm w-full rounded-full bg-transparent"
             >
               <Link href="/resume/Giri-Resume.pdf" target="_blank">
                 <Download className="mr-2 h-4 w-4" />

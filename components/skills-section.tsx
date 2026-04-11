@@ -73,23 +73,23 @@ export function SkillsSection() {
   }, { scope: containerRef })
 
   return (
-    <section ref={containerRef} className="py-32 px-6 lg:px-12 relative">
+    <section ref={containerRef} className="py-20 md:py-32 px-5 lg:px-12 relative">
       <div className="max-w-6xl mx-auto relative divide-y divide-white/5">
         
         <div className="section-header text-center pb-20">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 tracking-tight text-white">
             Technical Arsenal
           </h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto font-medium tracking-wide">
+          <p className="text-base md:text-xl text-white/60 max-w-2xl mx-auto font-medium tracking-wide">
             Precision tools and modular frameworks engineered to orchestrate scalable, high-performance web systems.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-px bg-white/[0.08] pt-12">
+        <div className="grid sm:grid-cols-2 gap-px bg-white/[0.08] pt-10 md:pt-12">
           {skillCategories.map((category, index) => (
             <Card 
               key={index}
-              className="skill-card bg-transparent border-none shadow-none rounded-none p-8 lg:p-12 transition-colors duration-500 hover:bg-white/[0.03]"
+              className="skill-card bg-transparent border-none shadow-none rounded-none p-6 md:p-8 lg:p-12 transition-colors duration-500 hover:bg-white/[0.03]"
             >
               <CardContent className="p-0">
                 <h3 className={`text-2xl font-bold mb-8 tracking-tight ${category.color}`}>
