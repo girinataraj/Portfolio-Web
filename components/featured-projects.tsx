@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -8,11 +8,18 @@ import { ExternalLink, Github, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import type { Project } from "@/app/api/projects/route"
-import { motion } from "framer-motion"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useGSAP } from "@gsap/react"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP)
+}
 
 export function FeaturedProjects() {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
+  const containerRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -30,28 +37,55 @@ export function FeaturedProjects() {
     fetchProjects()
   }, [])
 
+  useGSAP(() => {
+    // Only animate if we have loaded the projects
+    if (loading || projects.length === 0) return
+
+    // Header animation
+    gsap.fromTo(
+      ".project-header",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        },
+      }
+    )
+
+    // Staggered card animation
+    gsap.fromTo(
+      ".project-card",
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 75%",
+        },
+      }
+    )
+  }, { scope: containerRef, dependencies: [loading, projects.length] })
+
   if (loading) {
     return (
-      <section id="featured-projects" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="featured-projects" className="py-32 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Featured <span className="text-primary">Projects</span>
-            </h2>
+          <div className="text-center mb-20 animate-pulse">
+            <div className="h-10 w-64 bg-white/10 mx-auto rounded mb-4" />
           </div>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-10">
             {[...Array(4)].map((_, i) => (
-              <Card key={i} className="glass animate-pulse">
-                <div className="h-48 bg-muted/20 rounded-t-lg" />
-                <CardContent className="p-6">
-                  <div className="h-6 bg-muted/20 rounded mb-2" />
-                  <div className="h-4 bg-muted/20 rounded mb-4" />
-                  <div className="flex gap-2 mb-4">
-                    {[...Array(3)].map((_, j) => (
-                      <div key={j} className="h-6 w-16 bg-muted/20 rounded" />
-                    ))}
-                  </div>
-                </CardContent>
+              <Card key={i} className="bg-[#111] border-none animate-pulse h-[500px]">
+                <div className="h-64 bg-white/5 rounded-t-lg" />
               </Card>
             ))}
           </div>
@@ -61,169 +95,101 @@ export function FeaturedProjects() {
   }
 
   return (
-    <section id="featured-projects" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/10 to-transparent" />
-
-      <div className="max-w-7xl mx-auto relative">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-            Featured{" "}
-            <span className="text-gradient bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent">
-              Projects
-            </span>
+    <section ref={containerRef} id="featured-projects" className="py-32 px-6 lg:px-12 relative">
+      <div className="max-w-7xl mx-auto relative cursor-default">
+        
+        <div className="project-header text-center mb-24">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-white">
+            Selected Works
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
-            A showcase of my recent work in full-stack development, featuring real-world applications and innovative
-            solutions
+          <p className="text-xl text-white/60 max-w-2xl mx-auto font-medium tracking-wide">
+            A showcase of precision-engineered applications blending robust backend architecture with flawless front-end execution.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -8 }}
-              className="group"
-            >
-              <Card className="glass glass-hover h-full overflow-hidden group-hover:neon-glow transition-all duration-500">
-                <div className="relative overflow-hidden">
-                  <motion.div whileHover={{ scale: 1.1 }} transition={{ duration: 0.4 }}>
-                    <Image
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      width={600}
-                      height={300}
-                      className="w-full h-48 object-cover"
-                    />
-                  </motion.div>
-
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Floating action buttons */}
-                  <motion.div
-                    className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    {project.liveUrl && (
-                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                        <Button size="sm" className="glass neon-glow-cyan" asChild>
-                          <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                      </motion.div>
-                    )}
-                    {project.githubUrl && (
-                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                        <Button size="sm" variant="outline" className="glass bg-transparent" asChild>
-                          <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                            <Github className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                      </motion.div>
-                    )}
-                  </motion.div>
+        <div className="grid lg:grid-cols-2 gap-10 mb-20">
+          {projects.map((project) => (
+            <div key={project.id} className="project-card group shrink-0">
+              <Card className="h-full overflow-hidden bg-white/[0.03] border border-white/[0.07] hover:border-white/20 transition-all duration-700 hover:shadow-[0_0_40px_rgba(255,255,255,0.04)] flex flex-col">
+                <div className="relative h-72 overflow-hidden bg-black/50">
+                  <Image
+                    src={project.image || "/placeholder.svg"}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-transparent to-transparent opacity-80" />
                 </div>
 
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-xl group-hover:text-gradient group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                    {project.title}
-                  </CardTitle>
-                  <CardDescription className="text-muted-foreground leading-relaxed">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
+                <div className="flex flex-col flex-grow p-8">
+                  <CardHeader className="p-0 pb-6">
+                    <CardTitle className="text-3xl font-bold tracking-tight text-white mb-3">
+                      {project.title}
+                    </CardTitle>
+                    <CardDescription className="text-white/60 text-lg leading-relaxed">
+                      {project.description}
+                    </CardDescription>
+                  </CardHeader>
 
-                <CardContent className="space-y-6">
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 4).map((tech, techIndex) => (
-                      <motion.div
-                        key={tech}
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: techIndex * 0.1 }}
-                      >
+                  <CardContent className="p-0 flex flex-col flex-grow justify-end space-y-8">
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech) => (
                         <Badge
+                          key={tech}
                           variant="secondary"
-                          className="glass text-xs font-medium px-3 py-1 hover:neon-glow-purple transition-all duration-300"
+                          className="bg-white/5 text-white/70 hover:bg-white/10 hover:text-white transition-colors duration-300 px-3 py-1 text-xs font-semibold rounded-full border-none"
                         >
                           {tech}
                         </Badge>
-                      </motion.div>
-                    ))}
-                    {project.technologies.length > 4 && (
-                      <Badge variant="secondary" className="glass text-xs">
-                        +{project.technologies.length - 4} more
-                      </Badge>
-                    )}
-                  </div>
+                      ))}
+                    </div>
 
-                  <div className="flex gap-3">
-                    {project.liveUrl && (
-                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <div className="flex items-center gap-4 pt-4 border-t border-white/5">
+                      {project.liveUrl && (
                         <Button
                           asChild
-                          size="sm"
-                          className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-medium"
+                          className="bg-white text-black hover:bg-gray-200 transition-colors duration-300 rounded-full font-semibold px-6 py-6"
                         >
                           <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="h-4 w-4 mr-2" />
                             Live Demo
                           </Link>
                         </Button>
-                      </motion.div>
-                    )}
-                    {project.githubUrl && (
-                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button asChild variant="outline" size="sm" className="glass glass-hover bg-transparent">
+                      )}
+                      
+                      {project.githubUrl && (
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="bg-transparent border border-white/20 text-white hover:bg-white/5 hover:text-white transition-colors duration-300 rounded-full py-6 px-6"
+                        >
                           <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                             <Github className="h-4 w-4 mr-2" />
-                            Code
+                            Source
                           </Link>
                         </Button>
-                      </motion.div>
-                    )}
-                  </div>
-                </CardContent>
+                      )}
+                    </div>
+                  </CardContent>
+                </div>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="glass glass-hover border-primary/50 text-primary hover:text-white font-semibold px-8 py-4 text-lg bg-transparent"
-            >
-              <Link href="/projects">
-                View All Projects
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </motion.div>
-        </motion.div>
+        <div className="project-header text-center pt-8 border-t border-white/5">
+          <Button
+            asChild
+            variant="ghost"
+            size="lg"
+            className="group text-white/80 hover:text-white hover:bg-white/5 px-8 py-6 rounded-full text-lg font-medium transition-all duration-300"
+          >
+            <Link href="/projects">
+              View Project Archive
+              <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </Button>
+        </div>
       </div>
     </section>
   )

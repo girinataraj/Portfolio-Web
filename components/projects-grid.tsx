@@ -1,198 +1,222 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github, Tag } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
+import { ExternalLink, Github, ArrowUpRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import type { Project } from "@/app/api/projects/route"
 
+// ─── Skeleton ────────────────────────────────────────────────────────────────
+function Skeleton() {
+  return (
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06]">
+      {[...Array(6)].map((_, i) => (
+        <div key={i} className="bg-[#202328] p-8 space-y-4 animate-pulse">
+          <div className="h-48 bg-white/[0.05] rounded-none" />
+          <div className="h-5 bg-white/[0.05] rounded w-3/4" />
+          <div className="h-3 bg-white/[0.04] rounded w-full" />
+          <div className="h-3 bg-white/[0.04] rounded w-2/3" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ─── Category pill ────────────────────────────────────────────────────────────
+function FilterPill({
+  label,
+  active,
+  onClick,
+}: {
+  label: string
+  active: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`text-[12px] font-medium px-4 py-1.5 rounded-full border transition-all duration-200 ${
+        active
+          ? "bg-white text-black border-white"
+          : "border-white/[0.1] text-white/40 hover:text-white hover:border-white/30 bg-transparent"
+      }`}
+    >
+      {label}
+    </button>
+  )
+}
+
+// ─── Project card ─────────────────────────────────────────────────────────────
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <div className="group flex flex-col bg-[#202328] hover:bg-white/[0.03] transition-colors duration-300 border border-white/[0.05] hover:border-white/[0.12]">
+      {/* Image */}
+      <div className="relative h-52 overflow-hidden bg-black/20">
+        <Image
+          src={project.image || "/placeholder.svg"}
+          alt={project.title}
+          fill
+          className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
+        />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#202328] via-transparent to-transparent" />
+
+        {/* Featured badge */}
+        {project.featured && (
+          <span className="absolute top-3 left-3 text-[10px] font-semibold tracking-widest uppercase text-white/60 border border-white/10 rounded-full px-2.5 py-0.5 bg-black/30">
+            Featured
+          </span>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col flex-1 p-7 pb-6">
+        {/* Category */}
+        <p className="text-[10px] font-semibold tracking-[0.18em] text-white/30 uppercase mb-3">
+          {project.category}
+        </p>
+
+        {/* Title */}
+        <h3 className="text-lg font-bold text-white leading-snug mb-3 group-hover:text-white transition-colors line-clamp-2">
+          {project.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-sm text-white/45 leading-relaxed mb-5 line-clamp-3 flex-1">
+          {project.longDescription || project.description}
+        </p>
+
+        {/* Tech chips */}
+        <div className="flex flex-wrap gap-1.5 mb-6">
+          {project.technologies.slice(0, 4).map((tech) => (
+            <span
+              key={tech}
+              className="text-[11px] text-white/35 border border-white/[0.07] rounded-full px-2.5 py-0.5 font-medium"
+            >
+              {tech}
+            </span>
+          ))}
+          {project.technologies.length > 4 && (
+            <span className="text-[11px] text-white/25 border border-white/[0.05] rounded-full px-2.5 py-0.5">
+              +{project.technologies.length - 4}
+            </span>
+          )}
+        </div>
+
+        {/* Action links */}
+        <div className="flex items-center gap-4 pt-4 border-t border-white/[0.06]">
+          {project.liveUrl && (
+            <Link
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[12px] font-semibold text-white hover:text-white/70 transition-colors"
+            >
+              <ArrowUpRight className="h-3.5 w-3.5" />
+              Live Demo
+            </Link>
+          )}
+          {project.githubUrl && (
+            <Link
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[12px] font-medium text-white/35 hover:text-white transition-colors"
+            >
+              <Github className="h-3.5 w-3.5" />
+              Source
+            </Link>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Main grid ─────────────────────────────────────────────────────────────────
 export function ProjectsGrid() {
-  const [projects, setProjects] = useState<Project[]>([])
-  const [loading, setLoading] = useState(true)
-  const [selectedCategory, setSelectedCategory] = useState<string>("All")
+  const [projects, setProjects]               = useState<Project[]>([])
+  const [loading, setLoading]                 = useState(true)
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const gridRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch("/api/projects")
-        const data = await response.json()
-        setProjects(data.projects)
-      } catch (error) {
-        console.error("Failed to fetch projects:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchProjects()
+    fetch("/api/projects")
+      .then((r) => r.json())
+      .then((d) => setProjects(d.projects))
+      .catch(console.error)
+      .finally(() => setLoading(false))
   }, [])
 
-  const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))]
-  const filteredProjects =
-    selectedCategory === "All" ? projects : projects.filter((p) => p.category === selectedCategory)
+  // Animate cards in whenever filtered list changes
+  useEffect(() => {
+    const cards = gridRef.current?.querySelectorAll<HTMLElement>(".proj-card")
+    if (!cards) return
+    cards.forEach((card, i) => {
+      card.style.opacity = "0"
+      card.style.transform = "translateY(20px)"
+      setTimeout(() => {
+        card.style.transition = "opacity 0.5s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1)"
+        card.style.opacity = "1"
+        card.style.transform = "translateY(0)"
+      }, i * 60)
+    })
+  }, [selectedCategory, loading])
 
-  if (loading) {
-    return (
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, i) => (
-              <Card key={i} className="bg-card border-border animate-pulse">
-                <div className="h-48 bg-muted rounded-t-lg" />
-                <CardContent className="p-6">
-                  <div className="h-6 bg-muted rounded mb-2" />
-                  <div className="h-4 bg-muted rounded mb-4" />
-                  <div className="flex gap-2 mb-4">
-                    {[...Array(3)].map((_, j) => (
-                      <div key={j} className="h-6 w-16 bg-muted rounded" />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
+  const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))]
+  const filtered = selectedCategory === "All" ? projects : projects.filter((p) => p.category === selectedCategory)
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedCategory(category)}
-              className={
-                selectedCategory === category
-                  ? "bg-primary hover:bg-accent"
-                  : "border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
-              }
-            >
-              <Tag className="h-4 w-4 mr-2" />
-              {category}
-            </Button>
+    <section className="pb-36 px-6 lg:px-16 border-t border-white/[0.06]">
+      <div className="max-w-5xl mx-auto">
+
+        {/* Filter */}
+        <div className="flex flex-wrap gap-2 py-10">
+          {categories.map((cat) => (
+            <FilterPill
+              key={cat}
+              label={cat}
+              active={selectedCategory === cat}
+              onClick={() => setSelectedCategory(cat)}
+            />
           ))}
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => (
-            <Card
-              key={project.id}
-              className="bg-card border-border hover:border-primary/50 transition-all duration-300 group h-full flex flex-col"
-            >
-              <div className="relative overflow-hidden rounded-t-lg">
-                <Image
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  width={400}
-                  height={250}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                {/* Featured Badge */}
-                {project.featured && (
-                  <div className="absolute top-3 right-3">
-                    <Badge className="bg-primary text-primary-foreground">Featured</Badge>
-                  </div>
-                )}
-              </div>
-
-              <CardHeader className="flex-grow">
-                <div className="flex items-center justify-between mb-2">
-                  <Badge variant="secondary" className="text-xs">
-                    {project.category}
-                  </Badge>
+        {/* Grid */}
+        {loading ? (
+          <Skeleton />
+        ) : (
+          <>
+            <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.05]">
+              {filtered.map((project) => (
+                <div key={project.id} className="proj-card">
+                  <ProjectCard project={project} />
                 </div>
-                <CardTitle className="text-xl group-hover:text-primary transition-colors line-clamp-2">
-                  {project.title}
-                </CardTitle>
-                <CardDescription className="text-muted-foreground line-clamp-3">
-                  {project.longDescription || project.description}
-                </CardDescription>
-              </CardHeader>
-
-              <CardContent className="space-y-4 mt-auto">
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.slice(0, 3).map((tech) => (
-                    <Badge key={tech} variant="outline" className="text-xs border-primary/30">
-                      {tech}
-                    </Badge>
-                  ))}
-                  {project.technologies.length > 3 && (
-                    <Badge variant="outline" className="text-xs border-primary/30">
-                      +{project.technologies.length - 3}
-                    </Badge>
-                  )}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex gap-3 pt-2">
-                  {project.liveUrl && (
-                    <Button asChild size="sm" className="bg-primary hover:bg-accent flex-1">
-                      <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Live Demo
-                      </Link>
-                    </Button>
-                  )}
-                  {project.githubUrl && (
-                    <Button asChild variant="outline" size="sm" className="flex-1 bg-transparent">
-                      <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4 mr-2" />
-                        Code
-                      </Link>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {filteredProjects.length === 0 && !loading && (
-          <div className="text-center py-12">
-            <h3 className="text-xl font-semibold mb-2">No projects found</h3>
-            <p className="text-muted-foreground">Try selecting a different category.</p>
-          </div>
-        )}
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">
-              Interested in Working <span className="text-primary">Together?</span>
-            </h3>
-            <p className="text-muted-foreground mb-6 text-pretty">
-              I'm always open to discussing new opportunities and exciting projects. Let's connect and explore how we
-              can create something amazing together.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-accent">
-                <Link href="/contact">Get In Touch</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
-              >
-                <Link href="/about">Learn More About Me</Link>
-              </Button>
+              ))}
             </div>
-          </div>
-        </div>
+
+            {filtered.length === 0 && (
+              <div className="py-24 text-center">
+                <p className="text-white/30 text-sm font-medium">No projects in this category.</p>
+              </div>
+            )}
+
+            {/* CTA */}
+            <div className="mt-24 pt-16 border-t border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-2">Have a project in mind?</h3>
+                <p className="text-white/40 text-sm">Let's build something great together.</p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-gray-100 transition-colors shrink-0"
+              >
+                Get in touch
+                <ExternalLink className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </section>
   )

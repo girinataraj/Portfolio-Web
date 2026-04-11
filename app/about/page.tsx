@@ -13,7 +13,10 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen pt-16">
+    <div
+      className="min-h-screen"
+      style={{ background: "linear-gradient(to bottom, #202328 0%, #111315 60%, #0A0A0A 100%)" }}
+    >
       <AboutHero />
       <AboutContent />
       <ExperienceSection />

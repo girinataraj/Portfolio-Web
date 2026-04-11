@@ -1,82 +1,104 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+"use client"
+
+import { useRef, useEffect } from "react"
 import { Code, Database, Globe, Zap } from "lucide-react"
 
+const expertise = [
+  {
+    icon: Code,
+    title: "Frontend",
+    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+  },
+  {
+    icon: Database,
+    title: "Backend",
+    skills: ["Node.js", "Express.js", ".NET Core", "REST / GraphQL"],
+  },
+  {
+    icon: Globe,
+    title: "Databases",
+    skills: ["MongoDB", "SQL Server", "PostgreSQL", "Redis"],
+  },
+  {
+    icon: Zap,
+    title: "DevOps",
+    skills: ["Git", "Docker", "AWS", "CI/CD & Vercel"],
+  },
+]
+
 export function AboutContent() {
-  const expertise = [
-    {
-      icon: <Code className="h-6 w-6" />,
-      title: "Frontend Development",
-      description: "Creating responsive, interactive user interfaces with React, Next.js, and modern CSS frameworks.",
-      skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
-    },
-    {
-      icon: <Database className="h-6 w-6" />,
-      title: "Backend Development",
-      description: "Building robust server-side applications and APIs with Node.js, Express, and .NET Core.",
-      skills: ["Node.js", "Express.js", ".NET Core", "RESTful APIs", "GraphQL", "Microservices"],
-    },
-    {
-      icon: <Globe className="h-6 w-6" />,
-      title: "Database Management",
-      description: "Designing and optimizing databases for performance and scalability.",
-      skills: ["MongoDB", "SQL Server", "PostgreSQL", "Redis", "Database Design", "Query Optimization"],
-    },
-    {
-      icon: <Zap className="h-6 w-6" />,
-      title: "DevOps & Deployment",
-      description: "Implementing CI/CD pipelines and deploying applications to cloud platforms.",
-      skills: ["Git", "Docker", "AWS", "Vercel", "CI/CD", "Cloud Deployment"],
-    },
-  ]
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const items = sectionRef.current?.querySelectorAll<HTMLElement>(".about-item")
+    if (!items) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement
+            setTimeout(() => {
+              el.style.transition = "opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1)"
+              el.style.opacity = "1"
+              el.style.transform = "translateY(0)"
+            }, i * 80)
+            observer.unobserve(el)
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    items.forEach((el) => {
+      el.style.opacity = "0"
+      el.style.transform = "translateY(24px)"
+      observer.observe(el)
+    })
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-card/30">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            My <span className="text-primary">Expertise</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            I bring a comprehensive skill set to every project, ensuring end-to-end development excellence
-          </p>
-        </div>
+    <section ref={sectionRef} className="py-20 px-6 lg:px-16 border-t border-white/[0.06]">
+      <div className="max-w-5xl mx-auto">
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {expertise.map((item, index) => (
-            <Card key={index} className="bg-card border-border hover:border-primary/50 transition-colors">
-              <CardHeader>
-                <div className="flex items-center space-x-3 mb-2">
-                  <div className="p-2 bg-primary/10 rounded-lg text-primary">{item.icon}</div>
-                  <CardTitle className="text-xl">{item.title}</CardTitle>
-                </div>
-                <p className="text-muted-foreground">{item.description}</p>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {item.skills.map((skill) => (
-                    <Badge key={skill} variant="secondary" className="text-xs">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+        {/* Section label */}
+        <p className="about-item text-[11px] font-semibold tracking-[0.25em] text-white/30 uppercase mb-12">
+          Expertise
+        </p>
+
+        {/* 2-column expertise grid */}
+        <div className="grid sm:grid-cols-2 gap-px bg-white/[0.06]">
+          {expertise.map(({ icon: Icon, title, skills }) => (
+            <div
+              key={title}
+              className="about-item group bg-[#202328] hover:bg-white/[0.03] transition-colors duration-300 p-8 lg:p-10"
+            >
+              <div className="flex items-center gap-3 mb-5">
+                <Icon className="h-4 w-4 text-white/30" strokeWidth={1.5} />
+                <h3 className="text-base font-semibold text-white tracking-wide">{title}</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-[12px] text-white/50 border border-white/[0.08] rounded-full px-3 py-1 font-medium"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* Personal Philosophy */}
-        <div className="mt-20 text-center">
-          <Card className="bg-gradient-to-r from-card to-card/50 border-primary/20 max-w-4xl mx-auto">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold mb-4">My Development Philosophy</h3>
-              <p className="text-lg text-muted-foreground text-pretty">
-                "I believe that great software is not just about writing code—it's about understanding user needs,
-                solving real problems, and creating solutions that are both elegant and efficient. Every line of code
-                should serve a purpose, and every feature should enhance the user experience."
-              </p>
-            </CardContent>
-          </Card>
+        {/* Philosophy quote */}
+        <div className="about-item mt-20 border-l-2 border-white/10 pl-8">
+          <p className="text-2xl text-white/50 leading-relaxed font-medium italic max-w-3xl">
+            "Great software is not just about writing code — it's about understanding problems,
+            shipping fast, and building things that last."
+          </p>
         </div>
       </div>
     </section>

@@ -17,7 +17,7 @@ export function ContactInfo() {
     {
       icon: <MapPin className="h-5 w-5" />,
       label: "Location",
-      value: "Bangalore, India",
+      value: "Erode, India",
       href: null,
     },
     {

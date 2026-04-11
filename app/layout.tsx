@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Navigation } from "@/components/navigation"
 import { Suspense } from "react"
+import { LenisProvider } from "@/components/lenis-provider"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     "JavaScript",
     "TypeScript",
     "Next.js",
-    "Bangalore Developer",
+    "Erode Developer",
     "India Developer",
     "Portfolio",
     "Freelancer",
@@ -90,16 +91,17 @@ export const metadata: Metadata = {
   generator: "Next.js",
   applicationName: "Giri N S Portfolio",
   referrer: "origin-when-cross-origin",
-  colorScheme: "dark",
+}
+
+export const viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
   ],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 }
 
 export default function RootLayout({
@@ -123,7 +125,7 @@ export default function RootLayout({
               sameAs: ["https://github.com/girinataraj", "https://www.linkedin.com/in/giri765"],
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Bangalore",
+                addressLocality: "Erode",
                 addressCountry: "India",
               },
               email: "girinataraj765@gmail.com",
@@ -150,11 +152,13 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={`font-sans ${inter.variable} ${GeistMono.variable} antialiased`}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Navigation />
-          <main>{children}</main>
-          <Analytics />
-        </Suspense>
+        <LenisProvider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Navigation />
+            <main>{children}</main>
+            <Analytics />
+          </Suspense>
+        </LenisProvider>
       </body>
     </html>
   )

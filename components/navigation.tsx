@@ -1,198 +1,186 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Menu, X, Github, Linkedin, Download } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { motion, AnimatePresence } from "framer-motion"
 
+// ─── Nav items ────────────────────────────────────────────────────────────────
+const NAV_ITEMS = [
+  { href: "/",         label: "Home"     },
+  { href: "/about",    label: "About"    },
+  { href: "/projects", label: "Projects" },
+  { href: "/contact",  label: "Contact"  },
+]
+
+// ─────────────────────────────────────────────────────────────────────────────
 export function Navigation() {
+  const pathname  = usePathname()
   const [isOpen, setIsOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const pathname = usePathname()
 
+  // Refs for entrance animations
+  const wordmarkRef = useRef<HTMLAnchorElement>(null)
+  const pillRef     = useRef<HTMLDivElement>(null)
+  const hireRef     = useRef<HTMLAnchorElement>(null)
+
+  // Animate in after mount — staggered slide-up
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const els = [wordmarkRef.current, pillRef.current, hireRef.current]
+    els.forEach((el, i) => {
+      if (!el) return
+      el.style.opacity   = "0"
+      el.style.transform = "translateY(20px)"
+    })
+    els.forEach((el, i) => {
+      if (!el) return
+      const delay = 300 + i * 80
+      setTimeout(() => {
+        el.style.transition = "opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1)"
+        el.style.opacity    = "1"
+        el.style.transform  = "translateY(0)"
+      }, delay)
+    })
   }, [])
 
-  const navItems = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/projects", label: "Projects" },
-    { href: "/contact", label: "Contact" },
-  ]
+  // Close mobile menu on navigation
+  useEffect(() => { setIsOpen(false) }, [pathname])
 
   return (
-    <motion.nav
-      className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300",
-        isScrolled ? "glass border-b border-primary/20" : "bg-transparent",
-      )}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
-            <Link
-              href="/"
-              className="text-xl font-bold text-gradient bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:from-accent hover:to-neon-purple transition-all duration-300"
-            >
-              GIRI N S
-            </Link>
-          </motion.div>
+    <>
+      {/* ── Bottom-left: Wordmark ─────────────────────────────────────── */}
+      <Link
+        ref={wordmarkRef}
+        href="/"
+        className="fixed bottom-6 left-6 z-50 select-none hidden sm:block"
+        style={{ willChange: "transform" }}
+      >
+        <span className="text-[11px] font-semibold tracking-[0.2em] text-white/40 uppercase hover:text-white/80 transition-colors duration-300">
+          Giri N S
+        </span>
+      </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.href}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+      {/* ── Bottom-center: Floating pill nav (desktop) ────────────────── */}
+      <div
+        ref={pillRef}
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden md:flex"
+        style={{ willChange: "transform" }}
+      >
+        <nav
+          className="flex items-center gap-1 px-2 py-2 rounded-full border border-white/[0.1]"
+          style={{
+            background:       "rgba(45, 49, 54, 0.88)",
+            backdropFilter:   "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+          }}
+        >
+          {NAV_ITEMS.map(({ href, label }) => {
+            const active = pathname === href
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "relative px-4 py-1.5 rounded-full text-[13px] font-medium transition-all duration-200 select-none",
+                  active
+                    ? "bg-white text-black"
+                    : "text-white/50 hover:text-white hover:bg-white/[0.07]"
+                )}
               >
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "text-sm font-medium transition-all duration-300 hover:text-primary relative group",
-                    pathname === item.href ? "text-primary" : "text-muted-foreground",
-                  )}
-                >
-                  {item.label}
-                  <span
-                    className={cn(
-                      "absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-full",
-                      pathname === item.href && "w-full",
-                    )}
-                  />
-                </Link>
-              </motion.div>
-            ))}
-
-            {/* Social Links */}
-            <motion.div
-              className="flex items-center space-x-4"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              {[
-                { href: "https://github.com/girinataraj", icon: Github },
-                { href: "https://www.linkedin.com/in/giri765", icon: Linkedin },
-              ].map((social, index) => (
-                <motion.div key={social.href} whileHover={{ scale: 1.2, y: -2 }} whileTap={{ scale: 0.9 }}>
-                  <Link
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-all duration-300 hover:neon-glow"
-                  >
-                    <social.icon className="h-5 w-5" />
-                  </Link>
-                </motion.div>
-              ))}
-
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  asChild
-                  size="sm"
-                  className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-medium neon-glow"
-                >
-                  <Link href="/resume/Giri-Resume.pdf" target="_blank">
-                    <Download className="h-4 w-4 mr-2" />
-                    Resume
-                  </Link>
-                </Button>
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* Mobile menu button */}
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <Button variant="ghost" size="sm" className="md:hidden glass" onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </motion.div>
-        </div>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              className="md:hidden"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="px-2 pt-2 pb-3 space-y-1 glass rounded-lg mt-2 border border-primary/20">
-                {navItems.map((item, index) => (
-                  <motion.div
-                    key={item.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                  >
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "block px-3 py-2 text-base font-medium rounded-md transition-all duration-300",
-                        pathname === item.href
-                          ? "text-primary glass neon-glow"
-                          : "text-muted-foreground hover:text-primary hover:glass",
-                      )}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.div>
-                ))}
-
-                {/* Mobile Social Links */}
-                <motion.div
-                  className="flex items-center justify-center space-x-6 pt-4 border-t border-primary/20"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.4 }}
-                >
-                  {[
-                    { href: "https://github.com/girinataraj", icon: Github },
-                    { href: "https://www.linkedin.com/in/giri765", icon: Linkedin },
-                  ].map((social) => (
-                    <Link
-                      key={social.href}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      <social.icon className="h-5 w-5" />
-                    </Link>
-                  ))}
-                  <Button
-                    asChild
-                    size="sm"
-                    className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white"
-                  >
-                    <Link href="/resume/Giri-Resume.pdf" target="_blank">
-                      <Download className="h-4 w-4 mr-2" />
-                      Resume
-                    </Link>
-                  </Button>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                {label}
+              </Link>
+            )
+          })}
+        </nav>
       </div>
-    </motion.nav>
+
+      {/* ── Bottom-right: Hire Me button ──────────────────────────────── */}
+      <Link
+        ref={hireRef}
+        href="/contact"
+        className={cn(
+          "fixed bottom-6 right-6 z-50 hidden sm:flex items-center gap-2",
+          "px-5 py-2.5 rounded-full text-[13px] font-semibold",
+          "transition-all duration-300 group select-none",
+          "bg-white text-black hover:bg-gray-100 hover:scale-[1.05] active:scale-[0.98]",
+          // Subtle glow
+          "shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_4px_24px_rgba(255,255,255,0.08)]",
+          "hover:shadow-[0_0_0_1px_rgba(255,255,255,0.25),0_6px_32px_rgba(255,255,255,0.15)]",
+        )}
+        style={{ willChange: "transform" }}
+      >
+        {/* Pulsing dot indicator */}
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+        </span>
+        Hire Me
+      </Link>
+
+      {/* ── Mobile: Floating menu button + drawer ─────────────────────── */}
+      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3">
+        {/* Hire Me compact on mobile */}
+        <Link
+          href="/contact"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold bg-white text-black shadow-lg"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+          </span>
+          Hire Me
+        </Link>
+
+        {/* Hamburger pill */}
+        <button
+          onClick={() => setIsOpen((v) => !v)}
+          aria-label="Toggle menu"
+          className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 text-white/60 hover:text-white transition-colors"
+          style={{ background: "rgba(45, 49, 54, 0.92)", backdropFilter: "blur(20px)" }}
+        >
+          {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+        </button>
+      </div>
+
+      {/* ── Mobile drawer — slides up from bottom ─────────────────────── */}
+      <div
+        className={cn(
+          "md:hidden fixed inset-x-4 z-40 rounded-2xl border border-white/[0.08] transition-all duration-300 ease-out overflow-hidden",
+          isOpen
+            ? "bottom-24 opacity-100 pointer-events-auto"
+            : "bottom-16 opacity-0 pointer-events-none"
+        )}
+        style={{ background: "rgba(38, 42, 46, 0.97)", backdropFilter: "blur(24px)" }}
+      >
+        <div className="py-4 px-2">
+          {NAV_ITEMS.map(({ href, label }) => {
+            const active = pathname === href
+            return (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "block px-4 py-3 rounded-xl text-[15px] font-medium transition-colors duration-200",
+                  active
+                    ? "text-white bg-white/[0.08]"
+                    : "text-white/50 hover:text-white hover:bg-white/[0.04]"
+                )}
+              >
+                {label}
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Mobile drawer backdrop */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-30"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+    </>
   )
 }
