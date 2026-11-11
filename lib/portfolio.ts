@@ -107,7 +107,7 @@ export const projects: Project[] = [
       "Built role-specific React interfaces over Flask APIs, with tenant-scoped memberships and service assignments. PostgreSQL service-row locks serialize ticket issuance and queue actions to keep concurrent operations consistent.",
     features: [
       "QR entry and customer ticket tracking",
-      "Staff call, complete, skip, and cancel workflows",
+      "Staff call, complete, and skip actions; customer ticket cancellation",
       "Owner management and reception displays",
       "Role checks, database constraints, and event history",
     ],
