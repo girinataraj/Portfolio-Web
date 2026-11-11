@@ -17,6 +17,8 @@ import {
   skills,
   type Project,
 } from "@/lib/portfolio";
+import { SignalArt } from "./signal-art";
+import { SignalField } from "./signal-field";
 import { MotionToggle } from "./experience-motion";
 
 export function ExternalLink({
@@ -84,18 +86,24 @@ export function ProjectVisual({
             </strong>
           </div>
           <div className="queue-screens">
-            <img
-              className="queue-screen-desktop"
-              src="/projects/v2/queue-staff-desktop.webp"
-              srcSet="/projects/v2/queue-staff-640.webp 640w, /projects/v2/queue-staff-desktop.webp 1366w"
-              sizes="(max-width: 760px) 70vw, 60vw"
-              alt="QueueLess original staff-console development screenshot"
-              width="1366"
-              height="1067"
-              loading={large ? "eager" : "lazy"}
-              fetchPriority={large ? "high" : undefined}
-              decoding="async"
-            />
+            <picture>
+              <source
+                media="(max-width:760px)"
+                srcSet="/projects/v2/queue-customer-mobile.webp"
+              />
+              <img
+                className="queue-screen-desktop"
+                src="/projects/v2/queue-staff-desktop.webp"
+                srcSet="/projects/v2/queue-staff-640.webp 640w, /projects/v2/queue-staff-desktop.webp 1366w"
+                sizes="(max-width: 760px) 70vw, 60vw"
+                alt="Original QueueLess development interface with synthetic demonstration data"
+                width="1366"
+                height="1067"
+                loading={large ? "eager" : "lazy"}
+                fetchPriority={large ? "high" : undefined}
+                decoding="async"
+              />
+            </picture>
             <img
               className="queue-screen-mobile"
               src="/projects/v2/queue-customer-mobile.webp"
@@ -246,11 +254,8 @@ export function ProjectCard({
 }) {
   return (
     <article className="project-card" data-reveal>
-      <Link
-        href={`/projects/${project.slug}/`}
-        className="visual-link"
-        aria-label={`Explore ${project.name}`}
-      >
+      <Link href={`/projects/${project.slug}/`} className="visual-link">
+        <span className="sr-only">Explore {project.name}. </span>
         <ProjectVisual project={project} />
         <span className="project-open" aria-hidden="true">
           <ArrowUpRight />
@@ -324,7 +329,7 @@ export function WorkSection({ all = false }: { all?: boolean }) {
           <SectionHeading
             number="01"
             label="Selected work"
-            title="Different problems. Same curiosity."
+            title="Systems, made tangible."
           >
             <p className="section-note">
               Published products, private systems,
@@ -334,13 +339,26 @@ export function WorkSection({ all = false }: { all?: boolean }) {
           </SectionHeading>
         )}
         <div className="project-grid">
-          {(all ? projects : projects.slice(0, 4)).map((project, index) => (
+          {(all
+            ? projects
+            : [
+                projects[2],
+                projects[3],
+                projects[0],
+                projects[1],
+                projects[4],
+                projects[5],
+              ]
+          ).map((project, index) => (
             <ProjectCard key={project.slug} project={project} index={index} />
           ))}
         </div>
         {!all && (
           <div className="work-outro">
-            <span>More to explore: retrieval, agents & tool integrations.</span>
+            <span>
+              Six projects. Published products, private systems and independent
+              explorations.
+            </span>
             <Link className="text-link" href="/projects/">
               All projects <ArrowRight size={18} aria-hidden="true" />
             </Link>
@@ -353,89 +371,43 @@ export function WorkSection({ all = false }: { all?: boolean }) {
 
 export function Hero() {
   return (
-    <section className="hero container">
-      <div className="hero-topline">
-        <div className="hero-identity">
-          <p>
-            Giri N S<span>.</span>
-          </p>
-          <p className="eyebrow">
-            Software Developer / Full-stack & applied AI
-          </p>
-        </div>
-        <span className="hero-status">
-          <i />
-          Open to developer opportunities
-        </span>
-      </div>
+    <section className="hero container" aria-labelledby="hero-title">
+      <div className="hero-grid" aria-hidden="true" />
       <div className="hero-copy">
-        <h1>
-          <span className="type-line">
-            <span>Engineering</span>
-          </span>
-          <span className="type-line">
-            <span>
-              with <em>intent.</em>
-            </span>
-          </span>
+        <h1 id="hero-title">
+          <span className="headline-line">GIRI N S</span>
         </h1>
-        <div className="hero-signature" aria-hidden="true">
-          <svg viewBox="0 0 300 70">
-            <path d="M8 40C60 8 126 10 125 34S63 71 67 40S179 12 188 36S145 65 161 45S242 18 278 29M260 14L281 29L261 42" />
-          </svg>
+        <p className="hero-role">
+          Software Developer<span>Full-stack &amp; Applied AI</span>
+        </p>
+        <div className="hero-intro">
+          <p className="engineering-statement">
+            Beyond the interface.
+            <br />
+            Connected underneath.
+          </p>
         </div>
       </div>
-      <div className="hero-portrait" data-depth>
-        <span className="portrait-index" aria-hidden="true">
-          [ g / ns ]
-        </span>
-        <div className="portrait-art">
-          <img
-            src="/assets/Giri1.jpg"
-            srcSet="/assets/Giri1-384.webp 384w, /assets/Giri1.jpg 1024w"
-            sizes="(max-width: 760px) 36vw, 25vw"
-            alt="Portrait of Giri N S"
-            width="1024"
-            height="1024"
-            fetchPriority="high"
-          />
-        </div>
-        <div className="portrait-caption">
-          <span>Erode, India</span>
-          <span>IT · Class of 2027</span>
-        </div>
+      <div className="hero-actions" aria-label="Primary actions">
+        <a href="#work" className="button button-primary">
+          Explore Work <ArrowDown size={18} aria-hidden="true" />
+        </a>
+        <a href="#about" className="button button-text">
+          About me <ArrowDown size={16} aria-hidden="true" />
+        </a>
       </div>
+      <SignalField>
+        <SignalArt />
+      </SignalField>
       <div className="hero-bottom">
         <p>
-          <span className="hero-study">B.Tech IT · Graduating 2027</span>I build
-          full-stack products and practical AI applications—connecting the
-          engineering underneath with the experience in front.
+          FULL-STACK DEVELOPMENT <span>/</span> APPLIED AI <span>/</span> OPEN
+          SOURCE
         </p>
-        <div className="hero-actions">
-          <Link className="button primary" href="#work">
-            Explore my work <ArrowDown size={18} aria-hidden="true" />
-          </Link>
-          <a
-            className="button secondary"
-            href="/resume/Giri-Resume.pdf"
-            download
-          >
-            Resume <Download size={17} aria-hidden="true" />
-          </a>
-          <ExternalLink href={site.github} className="hero-code">
-            GitHub <ArrowUpRight size={15} aria-hidden="true" />
-          </ExternalLink>
-        </div>
-        <div className="hero-index">
-          <span>From the interface</span>
-          <span>to the system.</span>
-          <ArrowDown size={20} aria-hidden="true" />
-        </div>
+        <a href="#work">
+          SCROLL TO EXPLORE <ArrowDown size={16} aria-hidden="true" />
+        </a>
       </div>
-      <p className="resume-note">
-        The existing resume PDF does not yet include iGEN; see the project case
-        studies for that experience.
-      </p>
     </section>
   );
 }
@@ -505,7 +477,7 @@ export function SkillsSection() {
       <SectionHeading
         number="03"
         label="Technical toolkit"
-        title="A toolkit, not a checklist."
+        title="Across the stack."
       />
       <div className="skills-grid">
         {skills.map((group, index) => (
@@ -529,7 +501,7 @@ export function ExperienceSection() {
       <SectionHeading
         number="04"
         label="Experience & education"
-        title="Learning by doing."
+        title="Experience, in context."
       />
       <div className="timeline">
         <article className="timeline-row" data-reveal>
@@ -580,7 +552,7 @@ export function OpenSourceSection() {
       <SectionHeading
         number="05"
         label="Open source"
-        title="A small diff. A shared improvement."
+        title="Small changes. Shared progress."
       >
         <ExternalLink
           href={`${site.github}?tab=repositories`}
@@ -682,6 +654,10 @@ export function Footer() {
           ↑
         </a>
       </div>
+      <p className="container resume-disclosure">
+        Resume: existing PDF. The iGEN internship and projects are documented on
+        this site and are not yet included in the PDF.
+      </p>
       <div className="footer-signature container" aria-hidden="true">
         giri<span> / </span>ns
         <svg viewBox="0 0 100 100">

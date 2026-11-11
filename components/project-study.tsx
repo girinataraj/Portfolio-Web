@@ -8,14 +8,20 @@ export function ProjectStudy({ slug }: { slug: string }) {
   const [selected, setSelected] = useState(0);
   const id = useId();
   const step = steps[selected];
+  const company =
+    slug === "saai-physiotherapy" || slug === "student-placement-system";
   return (
     <section className="project-study" aria-labelledby={`${id}-title`}>
       <div className="study-heading">
         <p className="eyebrow">Inside the system</p>
-        <h2 id={`${id}-title`}>Follow the thinking.</h2>
+        <h2 id={`${id}-title`}>
+          {company ? "Explore the product scope." : "Follow the thinking."}
+        </h2>
         <p>
-          Explore a source-based interaction study. No live data, AI calls, or
-          transactions.
+          {company
+            ? "Original conceptual illustration of confirmed product-level functionality. Personal contributions are described separately above. "
+            : "Explore a source-based interaction study. "}
+          No live data, AI calls, or transactions.
         </p>
       </div>
       <div className="study-controls" aria-label="Story steps">
@@ -63,7 +69,11 @@ export function ProjectStudy({ slug }: { slug: string }) {
         </div>
       </div>
       <div className="study-bottom">
-        <p>Illustration of documented behavior</p>
+        <p>
+          {company
+            ? "Conceptual product-level illustration"
+            : "Illustration of documented behavior"}
+        </p>
         <div>
           <button
             aria-label="Previous story step"
@@ -119,25 +129,37 @@ export function QueueGallery() {
           </button>
         </div>
       </div>
-      <img
-        key={view}
-        src={`/projects/v2/queue-${view}-desktop.webp`}
-        srcSet={
-          view === "customer"
-            ? "/projects/v2/queue-customer-768.webp 768w, /projects/v2/queue-customer-desktop.webp 1366w"
-            : "/projects/v2/queue-staff-640.webp 640w, /projects/v2/queue-staff-desktop.webp 1366w"
-        }
-        sizes="(max-width: 760px) 92vw, 65vw"
-        width="1366"
-        height={view === "customer" ? 1198 : 1067}
-        loading="lazy"
-        decoding="async"
-        alt={
-          view === "customer"
-            ? "Original QueueLess customer interface showing service entry and ticket tracking"
-            : "Original QueueLess staff interface showing queue management actions"
-        }
-      />
+      <picture>
+        <source
+          media="(max-width:760px)"
+          width="390"
+          height={view === "customer" ? 1203 : 1085}
+          srcSet={
+            view === "customer"
+              ? "/projects/v2/queue-customer-mobile.webp"
+              : "/projects/v2/queue-staff-mobile.webp"
+          }
+        />
+        <img
+          key={view}
+          src={`/projects/v2/queue-${view}-desktop.webp`}
+          srcSet={
+            view === "customer"
+              ? "/projects/v2/queue-customer-768.webp 768w, /projects/v2/queue-customer-desktop.webp 1366w"
+              : "/projects/v2/queue-staff-640.webp 640w, /projects/v2/queue-staff-desktop.webp 1366w"
+          }
+          sizes="(max-width: 760px) 92vw, 65vw"
+          width="1366"
+          height={view === "customer" ? 1198 : 1067}
+          loading="lazy"
+          decoding="async"
+          alt={
+            view === "customer"
+              ? "Original QueueLess customer interface showing service entry and ticket tracking"
+              : "Original QueueLess staff interface showing queue management actions"
+          }
+        />
+      </picture>
       <figcaption>
         Original development screenshot · synthetic demonstration data · from
         the project repository.

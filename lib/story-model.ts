@@ -10,6 +10,70 @@ export function clampStep(index: number, length: number): number {
     : 0;
 }
 export function storySteps(kind: string): StoryStep[] {
+  if (kind === "saai-physiotherapy")
+    return [
+      {
+        title: "Authorized staff",
+        state: "ACCESS",
+        detail:
+          "Conceptual product-level view: SAAI is intended for authorized clinic staff, with role-restricted access. No accounts or patient records are shown here.",
+        nodes: [
+          "Clinic-managed access",
+          "Authorized staff",
+          "Role restrictions",
+        ],
+      },
+      {
+        title: "Clinical workflows",
+        state: "CARE",
+        detail:
+          "Product-level functionality includes patient management, clinical assessments and treatment planning. This diagram does not attribute every module to my individual work.",
+        nodes: [
+          "Patient management",
+          "Clinical assessments",
+          "Treatment planning",
+        ],
+      },
+      {
+        title: "Follow-up",
+        state: "CONTINUITY",
+        detail:
+          "Product-level scope includes therapist scheduling and follow-up workflows. This is a conceptual illustration, without live data or a connection to the application.",
+        nodes: ["Therapist scheduling", "Treatment workflows", "Follow-up"],
+      },
+    ];
+  if (kind === "student-placement-system")
+    return [
+      {
+        title: "Training context",
+        state: "TRAINING",
+        detail:
+          "Product-level scope includes student records, training information, courses, batches and attendance. This conceptual illustration contains no student or operational data.",
+        nodes: ["Courses & batches", "Training information", "Attendance"],
+      },
+      {
+        title: "Placement progress",
+        state: "PROGRESS",
+        detail:
+          "Conceptual product-level view of placement monitoring. My confirmed contribution focused on placement tracking dashboard interfaces, rather than every product module.",
+        nodes: [
+          "Placement progress",
+          "Tracking dashboard",
+          "Monitoring interfaces",
+        ],
+      },
+      {
+        title: "Coordination",
+        state: "COORDINATION",
+        detail:
+          "Product-level functionality includes recruitment coordination and dashboard analytics. No private architecture, recruitment records or internal URLs are illustrated.",
+        nodes: [
+          "Placement operations",
+          "Recruitment coordination",
+          "Dashboard analytics",
+        ],
+      },
+    ];
   if (kind === "queueless-pulse")
     return [
       {

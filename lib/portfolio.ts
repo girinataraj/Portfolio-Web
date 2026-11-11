@@ -214,7 +214,7 @@ export const skills = [
   },
   {
     title: "Interfaces",
-    items: ["React", "Next.js", "Tailwind CSS", "Responsive UI"],
+    items: ["React", "Next.js", "Tailwind CSS", "Vite", "Responsive UI"],
   },
   {
     title: "Services & data",

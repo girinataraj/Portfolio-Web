@@ -106,8 +106,8 @@ export default async function ProjectPage({
           <p className="eyebrow">In this case study</p>
           <a href="#overview">01 / The context</a>
           <a href="#contribution">02 / My contribution</a>
-          {!company && <a href="#interaction">03 / Inside the system</a>}
-          <a href="#boundaries">{company ? "03" : "04"} / Scope & boundaries</a>
+          <a href="#interaction">03 / {company ? "Product illustration" : "Inside the system"}</a>
+          <a href="#boundaries">04 / Scope & boundaries</a>
         </aside>
         <div className="case-content">
           <section id="overview" data-reveal>
@@ -171,11 +171,7 @@ export default async function ProjectPage({
               </figcaption>
             </figure>
           )}
-          {!company && (
-            <div id="interaction">
-              <ProjectStudy slug={slug} />
-            </div>
-          )}
+          <div id="interaction"><ProjectStudy slug={slug} /></div>
           <section className="scope-note" id="boundaries" data-reveal>
             <p className="eyebrow">
               {company ? "03" : "04"} / Scope & boundaries

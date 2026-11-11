@@ -24,3 +24,13 @@ test("AI studies differentiate tool routing from resume retrieval", () => {
   assert.match(storySteps("resume-rag")[1].detail, /three/);
   assert.ok(storySteps("resume-rag").some((s) => /unavailable/.test(s.detail)));
 });
+test("private-product illustrations stay at product scope without internal architecture", () => {
+  for (const slug of ["saai-physiotherapy", "student-placement-system"]) {
+    const steps = storySteps(slug);
+    assert.equal(steps.length, 3);
+    assert.ok(steps.every((s) => /product-level|conceptual/i.test(s.detail)));
+    assert.ok(
+      steps.every((s) => !/MCP|pgvector|API endpoint|ASP.NET/.test(s.detail)),
+    );
+  }
+});

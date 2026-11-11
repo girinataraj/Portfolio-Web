@@ -70,11 +70,14 @@ export function Navigation() {
           ref={brandRef}
           href="/"
           className="wordmark"
-          aria-label="Giri N S, home"
+          aria-label="giri.ns — Giri N S, home"
           onClick={() => setOpen(false)}
         >
           giri<span className="accent">.</span>
-          <span className="wordmark-suffix"> / developer</span>
+          <span className="brand-ns">ns</span>
+          <span className="wordmark-suffix" aria-hidden="true">
+            OBSIDIAN / V3
+          </span>
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           {links.map((link) => (

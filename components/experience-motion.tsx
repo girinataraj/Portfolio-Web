@@ -5,24 +5,49 @@ import { Pause, Play } from "lucide-react";
 
 export function MotionToggle() {
   const [paused, setPaused] = useState(false);
+  const [system, setSystem] = useState(false);
+  useEffect(() => {
+    const media = matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => {
+      const user = document.documentElement.dataset.userPaused === "true";
+      setPaused(user);
+      setSystem(media.matches);
+      document.documentElement.dataset.motion =
+        user || media.matches ? "reduced" : "full";
+    };
+    media.addEventListener("change", update);
+    window.addEventListener("portfolio:motion", update);
+    update();
+    return () => {
+      media.removeEventListener("change", update);
+      window.removeEventListener("portfolio:motion", update);
+    };
+  }, []);
+  const quiet = paused || system;
   return (
     <button
       className="motion-toggle"
-      aria-label="Pause decorative motion"
-      aria-pressed={paused}
+      aria-label={
+        system
+          ? "Motion off — system reduced motion preference"
+          : quiet
+            ? "Motion off — resume decorative motion"
+            : "Motion on — pause decorative motion"
+      }
+      aria-pressed={quiet}
       onClick={() => {
-        const next = !paused;
-        setPaused(next);
-        document.documentElement.dataset.motion = next ? "reduced" : "full";
+        document.documentElement.dataset.userPaused = String(!paused);
+        document.documentElement.dataset.motion =
+          !paused || system ? "reduced" : "full";
         window.dispatchEvent(new Event("portfolio:motion"));
       }}
     >
-      {paused ? (
+      {quiet ? (
         <Play size={13} aria-hidden="true" />
       ) : (
         <Pause size={13} aria-hidden="true" />
       )}
-      <span>Motion</span>
+      <span>Motion {quiet ? "off" : "on"}</span>
     </button>
   );
 }
@@ -38,7 +63,7 @@ export function ExperienceMotion() {
     let frame = 0;
     let rect: DOMRect | null = null;
     const animations: Animation[] = [];
-    const portraits = [
+    const depthElements = [
       ...document.querySelectorAll<HTMLElement>("[data-depth]"),
     ];
     const permitted = () =>
@@ -66,7 +91,7 @@ export function ExperienceMotion() {
     const setup = () => {
       observer?.disconnect();
       animations.forEach((a) => a.cancel());
-      portraits.forEach((el) => {
+      depthElements.forEach((el) => {
         el.style.setProperty("--depth-x", "0deg");
         el.style.setProperty("--depth-y", "0deg");
       });
@@ -94,7 +119,7 @@ export function ExperienceMotion() {
         .querySelectorAll("[data-reveal]")
         .forEach((el) => observer?.observe(el));
     };
-    portraits.forEach((el) => {
+    depthElements.forEach((el) => {
       el.addEventListener("pointerenter", enter);
       el.addEventListener("pointermove", move);
       el.addEventListener("pointerleave", leave);
@@ -102,13 +127,27 @@ export function ExperienceMotion() {
     reduced.addEventListener("change", setup);
     window.addEventListener("portfolio:motion", setup);
     setup();
+    const focusAnchor = (event: MouseEvent) => {
+      const link = (event.target as Element)?.closest('a[href^="#"]');
+      if (!link) return;
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return;
+      const target = document.getElementById(href.slice(1));
+      if (target) {
+        if (!target.hasAttribute("tabindex"))
+          target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+      }
+    };
+    document.addEventListener("click", focusAnchor);
     return () => {
+      document.removeEventListener("click", focusAnchor);
       observer?.disconnect();
       cancelAnimationFrame(frame);
       animations.forEach((a) => a.cancel());
       reduced.removeEventListener("change", setup);
       window.removeEventListener("portfolio:motion", setup);
-      portraits.forEach((el) => {
+      depthElements.forEach((el) => {
         el.removeEventListener("pointerenter", enter);
         el.removeEventListener("pointermove", move);
         el.removeEventListener("pointerleave", leave);
