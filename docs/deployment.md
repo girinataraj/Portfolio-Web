@@ -56,3 +56,16 @@ Remaining manual work: use the verified student account to redeem the Name.com b
 V1 READY deployment `dpl_EQziMvoBERfUmtXCVy3UyahjmhBJ`, commit `fd3f3cd71cb4cb73df493075a37c9890bd1bf2c7`, remains the rollback reference. Local tag `checkpoint-portfolio-v1-2026-11-11` preserves that source. The V2 branch is `codex/interactive-portfolio-v2`. Existing project/team/Git/production branch and all domain aliases are retained; no new project, DNS or registration action is needed.
 
 Local verification and measured scores are in `qa-v2.md`; design and motion maintenance are in `design-system-v2.md`. Push the feature branch for a preview, verify the hosted result, then fast-forward `main`. Add actual preview and production evidence after those steps pass.
+
+## V2 verified release
+
+- Final application commit: `5e2f5e9d1d7c3d366c15fd493cb39b90d6bf12e0`, fast-forwarded from the verified feature branch to `main` without force. The main redesign is `e1233143a549b9c6811dd8dad64fa29a29b20a60`; the follow-up clarifies customer cancellation versus staff queue actions from the documented QueueLess source.
+- Preview: `dpl_9JWgUK3uV1xk9sbj3mLb64fH1R1H`, READY, https://portfolio-2clug98lq-girinataraj765-gmailcoms-projects.vercel.app/ . Twenty authenticated-browser route checks, client navigation, interaction state and console checks pass. Existing Vercel Authentication remains enabled.
+- Final correction preview: `dpl_HzfwEmAD6RspBg8a7oro4Va9SKH4`, READY, https://portfolio-96ulv7xjo-girinataraj765-gmailcoms-projects.vercel.app/ . The corrected wording was verified in the existing authenticated browser; build and all 14 tests pass again.
+- Production application deployment: `dpl_J81q7VViar17YLDTs3waqfdosr4P`, READY. Existing public URL https://portfolio-web-ochre-five.vercel.app/ serves the new editorial redesign and all six case studies, including both approved iGEN projects.
+- Public verification: ten pages and 23 referenced assets pass; canonical/social metadata and security headers pass; unknown route returns 404; public resume matches the authentic local PDF by SHA-256. The corrected AST internship is present. No private company links or records are published.
+- Production Lighthouse: mobile 97, desktop 100 performance; accessibility/best-practices/SEO 100 in both runs. These are lab category measurements with saved reports, not an assertion that every accessibility issue is excluded.
+- Production aliases still include `portfolio-web-ochre-five.vercel.app`, `girinataraj.tech`, `www.girinataraj.tech`, and the existing team/main Vercel aliases. No DNS was changed.
+- No duplicate project, hosting migration, purchase, paid service or new runtime dependency. V1 remains available in deployment history and the local checkpoint tag. The final documentation-only follow-up records this verified application release; it changes no site behavior.
+
+Custom-domain status is unchanged: the site is ready for a claimed domain through a centralized canonical origin. `girins.dev` was available at the earlier check, not reserved. Student eligibility and a zero-price checkout must still be verified and claimed by the user before DNS work. Existing `.tech` aliases are preserved.

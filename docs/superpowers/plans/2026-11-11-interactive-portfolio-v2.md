@@ -44,8 +44,8 @@ Motion: 180ms controls, 420ms state transitions, 720ms entrance; cubic-bezier(.2
 - [x] 2. Write source-level story-state tests and export behavior checks, observe failure, implement bounded queue/commerce/retrieval studies and accessible controls. Interface: `storySteps(kind)`, `clampStep(index,length)` and named `ProjectStudy` component. Test clamping, source-specific steps, no fake AI output or transactions.
 - [x] 3. Recompose shared sections, hero/project visual covers, project index and detail pages. Central enhancement controller owns route entrances/reveals/pointer effect cleanup. Keep all text SSR-visible and all links usable with JS absent.
 - [x] 4. Verify lint/types/build/export tests; browser matrix and keyboard/reduced-motion checks; run actual Lighthouse audits with saved reports. Fix material issues and document measured limits.
-- [ ] 5. Three independent critic reviews: creative direction, frontend quality, recruiter/content accuracy. Fix substantive findings. Push safe branch, verify existing-project preview, fast-forward main, verify public production, preserve rollback.
-- [ ] 6. Record design/motion maintenance guidance, asset provenance, before/after shots, scores, release IDs, commit and remaining factual limitations.
+- [x] 5. Three independent critic reviews: creative direction, frontend quality, recruiter/content accuracy. Fix substantive findings. Push safe branch, verify existing-project preview, fast-forward main, verify public production, preserve rollback.
+- [x] 6. Record design/motion maintenance guidance, asset provenance, before/after shots, scores, release IDs, commit and remaining factual limitations.
 
 ## Review focus
 
@@ -58,3 +58,5 @@ Motion: 180ms controls, 420ms state transitions, 720ms entrance; cubic-bezier(.2
 ## Execution ledger
 
 Pre-flight: shared Project.slug/metadata origin and existing SEO routes are preserved. Asset research owns only public/projects/v2 and docs/v2-assets.md; source implementation stays with the owner. Release uses the existing authenticated Vercel team/project. Questions about SAAI/placement do not block independent work.
+
+Completed: all six approved case studies, three independent reviews and focused fixes; lint/types/build/14 tests; 50 local layouts; verified existing-project preview and production; live mobile/desktop Lighthouse 97/100 performance, 100 accessibility/SEO/best practices. Release evidence and limitations are in docs/qa-v2.md and docs/deployment.md.

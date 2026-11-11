@@ -22,6 +22,8 @@ Lighthouse 13.6.0 CLI, Chrome 157, Node 22 on Windows, production static export 
 
 Saved HTML/JSON: `qa/v2/lighthouse-{mobile,desktop,queue}-release.report.{html,json}` (local ignored QA artifacts).
 
+Final public production URL was audited after deployment: **mobile 97 / 100 / 100 / 100** (LCP 2.5s, TBT 70ms, CLS 0), **desktop 100 / 100 / 100 / 100** (LCP 0.5s, TBT 0ms, CLS 0), in performance/accessibility/best-practices/SEO order. Reports: `qa/v2/lighthouse-production-{mobile,desktop}.report.{html,json}`. These are measured Lighthouse category results, not a claim of perfect accessibility or a manual assistive-technology certification.
+
 Material audit fixes: darker small-text accent and contact text for contrast; correct Windows local-prefetch segment fallback; eager/high-priority case cover imagery; responsive portrait/screenshots instead of transferring desktop assets to small viewports; compressed local static delivery. Earlier uncompressed local mobile measurements of 77/79 were investigated rather than reported as the final release.
 
 ## Independent review resolutions
@@ -32,8 +34,16 @@ Three separate reviewers covered creative direction, frontend behavior, and recr
 
 `npm audit --omit=dev`: zero advisories. Full audit: nine moderate, zero high/critical, in transitive ESLint / TypeScript-ESLint / minimatch development tooling. These dependencies are absent from the static runtime. No unsafe forced major override was applied. Node's direct TypeScript test import emits a harmless module-format warning; all tests pass.
 
+Root advisory: [minimatch globparts amplification denial of service, GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249), propagated through nine tooling packages. npm suggests a semver-major ESLint change; prefer a compatible upstream tooling update and rerun lint rather than a forced unverified override.
+
 Both company projects are user-confirmed real production applications. Their stacks were directly reconfirmed after the user was told the old PDF omitted them. The complete approved descriptions and privacy boundaries are recorded in `docs/content-evidence.md`. There are no private source links, private application URLs, real records, internal APIs or company screenshots. No claims of individual ownership of every product module are made.
 
 ## Visual evidence
 
 Local files under `qa/v2/`: `before-desktop.png`, `before-mobile.png`, `before-full.png`, `after-desktop.png`, `after-mobile.png`, `after-full.png`, and `browser-matrix.json`. Before is the prior verified V1 release. Public production evidence and final deployment IDs are recorded in `docs/deployment.md` after release verification.
+
+Hosted preview: 20 route/viewport checks pass at 375/1440, including client navigation, source-based study state and zero console errors. Preview authentication remains intact; anonymous HTTP receives a Vercel login page and is not counted as application verification. Public production: 10 mobile route checks pass, verified SAAI case-study navigation and Play Store action, 10 anonymous HTTP page checks, 23 asset checks, canonical/social metadata, security headers, unknown-route 404 and resume SHA-256 equality. External public links return 200 except LinkedIn, whose 999 anti-automation response is recorded as restricted/unverified rather than broken.
+
+A final source review clarified QueueLess role wording: staff call/complete/skip; customer ticket cancellation. The copy-only follow-up rebuilt successfully, passed all 14 tests, and was verified in its own protected preview before production. An attempted Vercel connector fetch was rejected by automatic approval review because it creates an authenticated share link. No share link or protection change was made; the existing authenticated browser verified the preview instead.
+
+Future improvements: replace the authentic PDF with a user-approved resume including iGEN, rerun measurements after future image/content changes, and redeem/verify an eligible free custom domain before attaching it or changing DNS. More detailed company architecture or screenshots require explicit factual confirmation and permission.
