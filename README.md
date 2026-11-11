@@ -39,8 +39,8 @@ Build generates `out/`. `npm start` serves it at http://127.0.0.1:3000; set `POR
 - Project: `portfolio-web` (`prj_FkpBukoaC4VRsexSCq9el8hfvcwj`).
 - Team: `girinataraj765-gmailcoms-projects` (`team_eL4UGhwBotGdMqrUxwHrvGOq`).
 - Git repository: `girinataraj/Portfolio-Web`; production branch: `main`.
-- Framework: Next.js; Node 22.x; build `npm run build`; output `out`.
-- `vercel.json` versions the production build/output and response security headers. `next.config.mjs` enables static export and trailing slashes.
+- Framework: Next.js; Node 22.x; build `npm run build`. Keep Vercel's framework output-directory default; Next.js static export produces `out` locally.
+- `vercel.json` versions the production build and response security headers. `next.config.mjs` enables static export and trailing slashes. Do not override Vercel's Next.js output directory with `out`: its adapter still reads build manifests from `.next`.
 
 Push a feature branch to preview in this same project, run checks, then merge/fast-forward the verified change to `main`. Confirm the existing production alias after READY. Vercel retains the previous successful deployment if a replacement build fails. See `docs/deployment.md` for release evidence and rollback reference.
 

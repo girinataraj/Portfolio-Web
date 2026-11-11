@@ -7,7 +7,7 @@
 - Production URL: https://portfolio-web-ochre-five.vercel.app/.
 - Git: https://github.com/girinataraj/Portfolio-Web; branch `main`.
 - Prior READY deployment: `dpl_8czwxdqAfzKam9oysozBNUZWBj7g`, commit `277b1473fbe9fa578f68c8202538d89b5ec79f15`, matching original workspace HEAD.
-- Existing setting: Next.js and Node 22.x. New build/output are versioned as `npm run build` and `out` in `vercel.json`.
+- Existing setting: Next.js and Node 22.x. Build is `npm run build`; Vercel uses the framework's default output-directory setting. Static export produces `out` locally, while Vercel's Next.js adapter reads its manifests from `.next`.
 - Other existing aliases include `girinataraj.tech` and `www.girinataraj.tech`. No DNS has been modified.
 - Initial team access returned 403. The user authorized the exact team, after which authenticated reads succeeded. No token was exposed or persisted.
 
@@ -36,4 +36,4 @@ After the user confirms successful claim, attach the domain to this existing Ver
 - Review fixes verified: Escape from a menu link now restores focus to the toggle; project navigation renders the correct case study and route-specific social metadata. Skip link focuses main; no empty links or browser console errors. Reduced-motion CSS disables animations, transitions, and smooth scrolling.
 - Internship body in both site and PDF now uses the user's corrected railway waiting hall billing dashboard project. PDF rendering and extracted text verify the correction and unchanged content/layout elsewhere.
 
-Final release evidence will be appended after production verification.
+First preview `dpl_F1pE2eb79ug1ygXeFUNDCPD5EX27` built successfully but failed adapter packaging because `outputDirectory: out` made the Next.js adapter look for build manifests in the export folder. Removed that override; no production alias was changed. Final release evidence will be appended after production verification.
