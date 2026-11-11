@@ -10,9 +10,9 @@ QueueLess uses authentic repository screenshots, labeled development/synthetic d
 
 ## Implementation
 
-Files: `public/obsidian/index.html`, `obsidian.css`, `obsidian.js`, and self-hosted Geist fonts. No Next.js page, shared layout, production stylesheet, dependency, existing route or content module is changed. Next.js copies these public files into the static export; preview entry is `/obsidian/index.html`.
+Files: `public/obsidian/index.html`, `obsidian.css`, `obsidian.js`, self-hosted Geist fonts, and a minimal `app/obsidian-preview.html/route.ts` static-export adapter. No shared layout, production stylesheet, dependency, existing route or content module is changed. The GET handler is forced static: it reads the standalone document during build and emits HTML with no runtime backend or React page wrapper. Preview entry is `/obsidian-preview.html`.
 
-Local use: run the existing `npm run build`, then `npm start`; open `http://127.0.0.1:3000/obsidian/index.html` (or the selected PORT). Existing assets resolve from `/projects/v2/`. No credentials or API services are needed.
+Local use: run the existing `npm run build`, then `npm start`; open `http://127.0.0.1:3000/obsidian-preview.html` (or the selected PORT). Existing assets resolve from `/projects/v2/`. No credentials or API services are needed. The original public HTML also remains available for a plain static server.
 
 Motion: brief visible-first headline/core entrances; fine-pointer depth; two signal particles and a slow edge light; layer selection; screenshot crossfade; project perspective/hover; one-shot section entries. CSS/WAAPI only. Ambient motion pauses when offscreen or the document is hidden. System reduced motion and a manual pause disable nonessential movement. Touch retains native buttons without pointer depth.
 
@@ -24,10 +24,10 @@ Review the composition, typography, technical centerpiece and project treatment 
 
 - Five checked widths: 320, 375, 768, 1024 and 1440px. No horizontal overflow, one h1, every layer control within the hero, and no overlap between layer notes and the hero footer. The tablet control position and desktop hero overlap were corrected during review.
 - Keyboard layer selection and customer/staff screenshot switching work. The native scope disclosure opens. Manual motion pause removes particle animation and preserves visible content; ambient motion pauses below the hero. Pointer movement updates the fine-pointer depth transform; coarse-pointer CSS removes it.
-- JavaScript syntax check, production export build and all 14 existing portfolio tests pass. Only this document and `public/obsidian/` are added. No existing page/layout/content/dependency is modified.
+- JavaScript syntax check, production export build and all 14 existing portfolio tests pass. Only this document, `public/obsidian/` and one prototype-only static route adapter are added. No existing page/layout/content/dependency is modified.
 - Lighthouse 13.6.0, Chrome 157, local production export, default mobile simulation: performance 100, accessibility 100, best practices 100; LCP 1.0s, CLS 0. Final run with system reduced motion enabled reports the same category scores and resolves visible-label/accessibility-name mismatches. Reports are local ignored files under `qa/v3/lighthouse-{prototype,reduced-final}.report.{html,json}`. These are prototype lab results, not a full-site accessibility certification. The deliberate noindex prototype is not assessed for SEO release readiness.
 - Local screenshots: `qa/v3/desktop-hero.png`, `desktop-work.png`, `desktop-full.png`, `mobile-hero.png`, `mobile-work.png`, `mobile-full.png`. The authentic project images were decoded before full-page captures.
 
 Review lenses: creative direction uses an original faceted signal-field composition and varied spotlight/tile treatments; frontend review checked native controls, reduced motion, small-screen bounds and absence of new runtime dependencies; recruiter review enlarged mobile identity and retained immediately visible role, verified work and direct source/contact actions. This was a bounded prototype review, not a full V3 release audit.
 
-The hosted preview URL and observed verification are supplied with the prototype handoff. Do not describe this as a released V3 portfolio. Production main remains at `d217bd824b5a56ff4db3f955d36faf3c8d9cf297`.
+The initial preview built but the adapter returned 404 for the unregistered public HTML entry. The isolated force-static HTML route resolves the framework routing boundary; see [Next.js static Route Handlers](https://nextjs.org/docs/app/guides/static-exports#route-handlers). The hosted preview URL and observed verification are supplied with the prototype handoff. Do not describe this as a released V3 portfolio. Production main remains at `d217bd824b5a56ff4db3f955d36faf3c8d9cf297`.
