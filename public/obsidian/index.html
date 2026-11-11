@@ -28,7 +28,7 @@
         >giri<span class="brand-dot">.</span
         ><span class="brand-suffix">ns</span></a
       >
-      <span class="edition">OBSIDIAN <span>/</span> EXPLORATION 03</span>
+      <span class="edition">OBSIDIAN <span>/</span> V3</span>
       <nav aria-label="Prototype navigation">
         <a href="#selected-work">Selected work</a>
         <a href="mailto:girinataraj765@gmail.com" class="nav-contact"
@@ -60,9 +60,6 @@
           data-layer="interface"
           aria-labelledby="system-caption"
         >
-          <div class="system-coordinate coordinate-top" aria-hidden="true">
-            <span>FIG. 01</span><span>ENGINEERING FIELD</span>
-          </div>
           <div class="system-scene" aria-hidden="true">
             <svg class="architecture-field" viewBox="0 0 760 700" fill="none">
               <defs>
@@ -235,19 +232,16 @@
                 <circle cx="146" cy="379" r="16" />
                 <circle cx="146" cy="379" r="4" />
                 <path d="M146 402v28h-64" />
-                <text x="54" y="452">01 / INTERFACE</text>
               </g>
               <g class="field-node node-services">
                 <circle cx="579" cy="200" r="16" />
                 <circle cx="579" cy="200" r="4" />
                 <path d="M579 176v-30h-37" />
-                <text x="519" y="130">02 / SERVICES</text>
               </g>
               <g class="field-node node-intelligence">
                 <circle cx="596" cy="468" r="16" />
                 <circle cx="596" cy="468" r="4" />
                 <path d="M596 491v25h-30" />
-                <text x="493" y="540">03 / INTELLIGENCE</text>
               </g>
               <g fill="#8da6b9" opacity=".65">
                 <circle cx="240" cy="166" r="1.5" />
@@ -268,43 +262,63 @@
               <circle class="signal-particle particle-b" r="2" fill="#8bafff" />
             </svg>
           </div>
-          <figcaption id="system-caption">
-            <span class="concept-label">INTERACTIVE CONCEPT</span> One connected
-            way of thinking.
+          <figcaption class="system-panel">
+            <p class="concept-label" id="system-caption">
+              INTERACTIVE SIGNAL FIELD
+            </p>
+            <p class="system-instruction" id="layer-help">
+              Choose a layer to explore.
+            </p>
+            <div
+              class="layer-controls"
+              role="group"
+              aria-label="Engineering layers"
+              aria-describedby="layer-help"
+            >
+              <button
+                type="button"
+                data-layer="interface"
+                aria-pressed="true"
+                aria-controls="layer-response"
+              >
+                Interface
+              </button>
+              <button
+                type="button"
+                data-layer="services"
+                aria-pressed="false"
+                aria-controls="layer-response"
+              >
+                Services
+              </button>
+              <button
+                type="button"
+                data-layer="intelligence"
+                aria-pressed="false"
+                aria-controls="layer-response"
+              >
+                Intelligence
+              </button>
+            </div>
+            <p
+              class="layer-note"
+              id="layer-response"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <strong class="layer-key">React · TypeScript</strong>
+              <span class="layer-description"
+                >Clear interfaces. Thoughtful interactions.</span
+              >
+            </p>
           </figcaption>
-          <div class="layer-controls" aria-label="Explore engineering layers">
-            <button type="button" data-layer="interface" aria-pressed="true">
-              <span>01</span> Interface
-            </button>
-            <button type="button" data-layer="services" aria-pressed="false">
-              <span>02</span> Services
-            </button>
-            <button
-              type="button"
-              data-layer="intelligence"
-              aria-pressed="false"
-            >
-              <span>03</span> Intelligence
-            </button>
-          </div>
-          <p class="layer-note" aria-live="polite">
-            <span class="layer-key">React · TypeScript</span
-            ><span class="layer-description"
-              >Clear interfaces. Thoughtful interactions.</span
-            >
-          </p>
         </figure>
         <div class="hero-actions">
           <a href="#selected-work" class="button button-primary"
             >Explore Work <span aria-hidden="true">↘</span></a
           >
-          <a
-            href="https://portfolio-web-ochre-five.vercel.app/about/"
-            class="button button-text"
-            target="_blank"
-            rel="noopener noreferrer"
-            >About me <span aria-hidden="true">↗</span
-            ><span class="sr-only"> (opens in new tab)</span></a
+          <a href="#about" class="button button-text"
+            >About me <span aria-hidden="true">↓</span></a
           >
         </div>
         <div class="hero-bottom">
@@ -315,6 +329,43 @@
           <a href="#selected-work" aria-label="Scroll to explore selected work"
             ><span class="scroll-line" aria-hidden="true"></span> SCROLL TO
             EXPLORE <span aria-hidden="true">↓</span></a
+          >
+        </div>
+      </section>
+      <section
+        class="about-preview shell"
+        id="about"
+        aria-labelledby="about-title"
+        tabindex="-1"
+      >
+        <div class="about-heading">
+          <p class="eyebrow">ABOUT / A SHORT INTRODUCTION</p>
+          <h2 id="about-title">Behind <br /><span>the systems.</span></h2>
+        </div>
+        <div class="about-body">
+          <p class="about-lead">
+            I’m Giri N S, a software developer building full-stack products and
+            practical AI applications.
+          </p>
+          <dl class="about-facts">
+            <div>
+              <dt>EDUCATION</dt>
+              <dd>
+                B.Tech, Information Technology<br />Nandha Engineering College,
+                Erode<br /><span>2023–2027 · Expected graduation 2027</span>
+              </dd>
+            </div>
+            <div>
+              <dt>INDUSTRY EXPERIENCE</dt>
+              <dd>
+                Software Developer Intern<br />iGEN Services and Solutions<br /><span
+                  >May–August 2026</span
+                >
+              </dd>
+            </div>
+          </dl>
+          <a class="about-return" href="#top"
+            >Back to hero <span aria-hidden="true">↑</span></a
           >
         </div>
       </section>
@@ -363,7 +414,7 @@
             <div class="screen-frame">
               <div class="screen-toolbar" aria-hidden="true">
                 <span class="window-dots">● ● ●</span
-                ><span>QUEUELESS / ORIGINAL INTERFACE</span><span>↗</span>
+                ><span>ORIGINAL INTERFACE</span><span>↗</span>
               </div>
               <img
                 id="queue-screen"

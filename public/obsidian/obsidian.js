@@ -149,6 +149,7 @@
       const target = document.querySelector(link.getAttribute("href"));
       if (target && !target.hasAttribute("tabindex"))
         target.setAttribute("tabindex", "-1");
+      target?.focus({ preventScroll: true });
     }),
   );
 })();

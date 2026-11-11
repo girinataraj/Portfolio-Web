@@ -1,6 +1,8 @@
 # OBSIDIAN — V3 visual prototype
 
-Scope: a desktop/mobile interactive hero, one QueueLess spotlight and one Sacred Commerce tile. This is a visual approval artifact, not the full portfolio rebuild. It lives only on `codex/obsidian-v3-prototype`. Do not merge it to main or change production, domains, DNS, or rollback history without a later explicit instruction.
+Scope: a desktop/mobile interactive hero, a compact local About preview, one QueueLess spotlight and one Sacred Commerce tile. This is a visual approval artifact, not the full portfolio rebuild. It lives only on `codex/obsidian-v3-prototype`. Do not merge it to main or change production, domains, DNS, or rollback history without a later explicit instruction.
+
+Approval status: the user approved the hero's name prominence and typography hierarchy. This does **not** approve the complete V3 direction or authorize full-site implementation. The current changes are limited to the specifically requested prototype corrections.
 
 ## Direction
 
@@ -34,12 +36,24 @@ Review lenses: creative direction uses an original faceted signal-field composit
 
 ## Name-first hero correction — 12 November 2026
 
-The name is now the sole h1, approximately 190px at 1440px desktop width and 96px at 375px mobile width. The profession is 31px / 22px respectively. The small identity metadata and dominant slogan were removed. On mobile the visual order is name → profession → short engineering statement → interactive signal field → Explore Work / About me. About me opens the existing approved production biography in a new tab; no About route or full-site section was implemented.
+The name is now the sole h1, approximately 190px at 1440px desktop width and 96px at 375px mobile width. The profession is 31px / 22px respectively. The small identity metadata and dominant slogan were removed. On mobile the visual order is name → profession → short engineering statement → interactive signal field → Explore Work / About me. The subsequent targeted review replaces the external About action with the compact local `#about` preview; no About route or full page is implemented.
 
 Five fresh checks at 320, 375, 768, 1024 and 1440px confirm that the complete name and profession are within the initial viewport, the name fits horizontally, the core graphic does not overlap it, and the page has no horizontal overflow. The hero contains no photograph. Existing signal-layer selection, keyboard Work navigation and motion pause pass. This validates the visible hierarchy; no timed visitor-recognition study is claimed.
 
 The revised local mobile Lighthouse run scores performance/accessibility/best practices 100/100/100, LCP 0.8s and CLS 0. Report: `qa/v3/lighthouse-name-first.report.{html,json}`. New handoff screenshots are `qa/v3/name-first-desktop.png` and `qa/v3/name-first-mobile.png`; measurements are in `qa/v3/name-first-layout-checks.json`. Earlier prototype screenshots and reports remain available separately.
 
 This correction changes only the prototype hero markup/styles and these notes. Production/main/DNS and the preview-only build guards remain untouched. Stop for approval of the revised prototype.
+
+## Targeted About, readability and control refinements — 12 November 2026
+
+- About me now navigates to `#about` in the same prototype. The matching OBSIDIAN section contains only the verified development focus, B.Tech IT education at Nandha Engineering College (Erode, 2023–2027 / expected graduation 2027), and Software Developer Intern role at iGEN Services and Solutions (May–August 2026). Evidence remains in `content-evidence.md`. No new company features, metrics, private links, source code or records are included.
+- The anchor moves keyboard focus to the local section; Back to hero returns to `#top`. No new page or V2 route was created or changed.
+- A visible invitation, “Choose a layer to explore,” introduces three bordered 46px-high controls. Labels are 13px; response descriptions are 14px. Selected border/fill, `aria-pressed`, `aria-controls` and an atomic live region expose the state clearly. Enter and Space activation pass. Tiny duplicate diagram labels were removed rather than enlarged into clutter.
+- Meaningful captions were raised to 11–13px and descriptive text to 14–18px throughout this bounded prototype. The approved oversized name, profession, photo-free hero and dark signal-field treatment remain intact.
+- Fresh checks at 320, 375, 768, 1024 and 1440px pass: no horizontal overflow, complete name/role in the initial viewport, readable controls within bounds, no panel/footer overlap, and a local About target. Fractional control bounds are compared with a half-pixel rounding tolerance.
+- Manual motion pause removes core/particle animation and sets scrolling to auto. About navigation and focus also pass with motion paused. A local Lighthouse run with system reduced motion enabled measures performance/accessibility/best practices 100/100/100, LCP 1.0s, CLS 0. These remain lab diagnostics, not a full accessibility certification. Report: `qa/v3/lighthouse-about-controls-reduced.report.{html,json}`. JavaScript syntax and the static prototype build pass; no dependency was added.
+- New handoff captures: `qa/v3/refined-desktop.png`, `refined-mobile.png`, `about-desktop.png`, `about-mobile.png`. Layout evidence: `qa/v3/about-controls-layout-checks.json`.
+
+The full V3 rebuild remains unapproved. Present this prototype iteration, then stop for review.
 
 The Next.js adapter returned 404 for the standalone HTML, including a compiled static HTML route. The preview therefore uses Vercel's supported per-deployment [static framework/build/output overrides](https://vercel.com/docs/project-configuration/vercel-json), scoped to this branch. Existing production settings and deployment remain intact. The hosted preview URL and observed verification are supplied with the prototype handoff. Do not describe this as a released V3 portfolio. Production main remains at `d217bd824b5a56ff4db3f955d36faf3c8d9cf297`.

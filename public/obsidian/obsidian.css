@@ -122,7 +122,7 @@ summary:focus-visible {
 }
 .edition {
   font:
-    9px GeistMono,
+    11px GeistMono,
     monospace;
   letter-spacing: 1.4px;
   color: #929ca8;
@@ -136,7 +136,7 @@ summary:focus-visible {
   align-items: center;
   gap: 46px;
   margin-left: auto;
-  font-size: 12px;
+  font-size: 13px;
   color: #b4bcc7;
 }
 .site-nav nav a {
@@ -207,7 +207,7 @@ h1 {
   display: block;
   margin-top: 11px;
   font:
-    13px GeistMono,
+    14px GeistMono,
     monospace;
   letter-spacing: 0.4px;
   color: #a9c3d9;
@@ -236,7 +236,7 @@ h1 {
   margin-top: 30px;
 }
 .button {
-  font-size: 12px;
+  font-size: 14px;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -286,6 +286,9 @@ h1 {
   --py: 0px;
 }
 .system-scene {
+  height: 550px;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 90%, transparent);
   transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry))
     translate3d(var(--px), var(--py), 0);
   transition: transform 650ms var(--ease);
@@ -299,22 +302,6 @@ h1 {
   height: auto;
   display: block;
   overflow: visible;
-}
-.system-coordinate {
-  display: flex;
-  justify-content: space-between;
-  font:
-    8px GeistMono,
-    monospace;
-  letter-spacing: 1.3px;
-  color: #647184;
-  position: absolute;
-  top: 36px;
-  left: 132px;
-  right: 67px;
-}
-.system-coordinate span:first-child {
-  color: #a2b3c4;
 }
 .core {
   animation: core-arrive 1400ms var(--ease) both;
@@ -348,13 +335,6 @@ h1 {
   stroke: #64788a;
   stroke-width: 0.7;
 }
-.field-node text {
-  font:
-    8px GeistMono,
-    monospace;
-  letter-spacing: 1.1px;
-  fill: #a6b2c0;
-}
 .signal-system[data-layer="interface"] .trace-interface,
 .signal-system[data-layer="services"] .trace-services,
 .signal-system[data-layer="intelligence"] .trace-intelligence {
@@ -386,87 +366,6 @@ h1 {
   offset-path: path("M596 468 510 420 438 386 385 339");
   animation-delay: -4.5s;
 }
-.signal-system figcaption {
-  position: absolute;
-  bottom: 67px;
-  left: 23%;
-  font-size: 11px;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  color: #a3aeba;
-}
-.concept-label {
-  font:
-    7px GeistMono,
-    monospace;
-  letter-spacing: 0.8px;
-  color: #607588;
-  max-width: 65px;
-  line-height: 1.6;
-  border-right: 1px solid #354454;
-  padding-right: 13px;
-}
-.layer-controls {
-  display: flex;
-  position: absolute;
-  bottom: 8px;
-  left: 23%;
-  right: 10%;
-  border-block: 1px solid #273543;
-  padding-block: 5px;
-  gap: 5px;
-}
-.layer-controls button {
-  background: transparent;
-  border: 0;
-  color: #99a7b8;
-  padding: 10px 11px;
-  flex: 1;
-  white-space: nowrap;
-  font-size: 10px;
-  transition:
-    background 220ms,
-    color 220ms;
-}
-.layer-controls button span {
-  font:
-    8px GeistMono,
-    monospace;
-  margin-right: 7px;
-  color: #5d7085;
-}
-.layer-controls button[aria-pressed="true"] {
-  color: var(--cyan);
-  background: #9beaff0b;
-}
-.layer-controls button:hover {
-  color: #e1f7ff;
-  background: #9beaff0c;
-}
-.layer-note {
-  display: flex;
-  position: absolute;
-  left: 23%;
-  right: 10%;
-  bottom: -45px;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 18px;
-  font:
-    8px GeistMono,
-    monospace;
-  line-height: 1.7;
-  letter-spacing: 0.2px;
-  color: #7f91a6;
-}
-.layer-key {
-  color: #b8c8d6;
-}
-.layer-description {
-  max-width: 170px;
-  text-align: right;
-}
 .hero-bottom {
   position: absolute;
   left: 0;
@@ -479,7 +378,7 @@ h1 {
   align-items: center;
   gap: 20px;
   font:
-    8px GeistMono,
+    11px GeistMono,
     monospace;
   letter-spacing: 1px;
   color: #737f90;
@@ -506,6 +405,129 @@ h1 {
   font-size: 15px;
   color: var(--cyan);
 }
+.system-panel {
+  margin: 0 8% 0 18%;
+}
+.concept-label {
+  margin: 0;
+  font:
+    11px GeistMono,
+    monospace;
+  line-height: 1.4;
+  letter-spacing: 0.7px;
+  color: #9eb3ca;
+}
+.system-instruction {
+  margin: 6px 0 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #e0eaf6;
+}
+.layer-controls {
+  display: flex;
+  gap: 6px;
+}
+.layer-controls button {
+  flex: 1;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 8px;
+  border: 1px solid #42546a;
+  border-radius: 4px;
+  background: #121d29;
+  color: #c5d3e3;
+  font-size: 13px;
+  white-space: nowrap;
+  transition:
+    background 220ms,
+    border-color 220ms,
+    color 220ms;
+}
+.layer-controls button[aria-pressed="true"] {
+  background: #16303e;
+  border-color: #9beaff;
+  color: #d6f8ff;
+  box-shadow: inset 0 -2px 0 #9beaff;
+}
+.layer-controls button:hover {
+  background: #1a2c3c;
+  border-color: #b2d5e7;
+  color: #effaff;
+}
+.layer-note {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 70px;
+  margin: 12px 0 0;
+}
+.layer-key {
+  font:
+    13px GeistMono,
+    monospace;
+  line-height: 1.4;
+  color: #c0d6e8;
+}
+.layer-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #a6b9ce;
+}
+.about-preview {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 60px;
+  padding: 60px 0;
+  border-block: 1px solid var(--line);
+}
+.about-preview:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 6px;
+}
+.about-preview h2 {
+  font-size: 44px;
+  line-height: 1.1;
+}
+.about-lead {
+  max-width: 650px;
+  margin: 0;
+  color: #d5e1ee;
+  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: -0.25px;
+}
+.about-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 28px 0 16px;
+}
+.about-facts dt {
+  margin-bottom: 10px;
+  font:
+    11px GeistMono,
+    monospace;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  color: #9bb0c8;
+}
+.about-facts dd {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #d1ddeb;
+}
+.about-facts dd > span {
+  color: #9fb0c5;
+}
+.about-return {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 44px;
+  font-size: 14px;
+  color: #c1e8f5;
+}
 .selected-work {
   padding-top: 112px;
   padding-bottom: 110px;
@@ -519,7 +541,7 @@ h1 {
 }
 .eyebrow {
   font:
-    9px GeistMono,
+    11px GeistMono,
     monospace;
   letter-spacing: 1.3px;
   color: #93a2b5;
@@ -540,7 +562,7 @@ h2 span {
   color: #798b9f;
 }
 .section-intro {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.85;
   color: #96a2b3;
   margin: 0 0 5px;
@@ -575,7 +597,7 @@ h2 span {
   display: flex;
   justify-content: space-between;
   font:
-    7px GeistMono,
+    11px GeistMono,
     monospace;
   letter-spacing: 1.2px;
   color: #7f92a7;
@@ -590,7 +612,7 @@ h2 span {
 }
 .project-type {
   font:
-    7px GeistMono,
+    11px GeistMono,
     monospace;
   letter-spacing: 1px;
   color: #8195a9;
@@ -616,7 +638,7 @@ h3 {
   color: #ced8e4;
 }
 .project-description {
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.85;
   color: #8f9fb2;
   max-width: 285px;
@@ -624,7 +646,7 @@ h3 {
 }
 .project-stack {
   font:
-    8px GeistMono,
+    12px GeistMono,
     monospace;
   line-height: 1.8;
   color: #a9b8c9;
@@ -639,7 +661,7 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 23px;
-  font-size: 11px;
+  font-size: 14px;
   padding-bottom: 10px;
   border-bottom: 1px solid #3e5669;
   transition:
@@ -687,13 +709,13 @@ h3 {
   align-items: center;
   padding: 0 11px;
   font:
-    6px GeistMono,
+    11px GeistMono,
     monospace;
   letter-spacing: 1px;
   color: #9eadbd;
 }
 .window-dots {
-  font-size: 6px;
+  font-size: 8px;
   letter-spacing: 2px;
   color: #657b8f;
 }
@@ -728,7 +750,7 @@ h3 {
 }
 .evidence-caption {
   font:
-    6px GeistMono,
+    11px GeistMono,
     monospace;
   letter-spacing: 0.8px;
   color: #8598ad;
@@ -743,7 +765,7 @@ h3 {
   border: 0;
   border-bottom: 1px solid #2b3c4d;
   background: none;
-  font-size: 9px;
+  font-size: 12px;
   white-space: nowrap;
   color: #96a7ba;
   padding: 10px 8px;
@@ -765,7 +787,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   font:
-    9px GeistMono,
+    13px GeistMono,
     monospace;
   color: #a1b2c6;
 }
@@ -789,7 +811,7 @@ h3 {
   padding-bottom: 24px;
 }
 .project-scope p {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
   margin: 0;
   color: #a1afc0;
@@ -829,7 +851,7 @@ h3 {
   top: 23px;
   left: 28px;
   font:
-    7px GeistMono,
+    11px GeistMono,
     monospace;
   letter-spacing: 1px;
   color: #a2b5cb;
@@ -859,7 +881,7 @@ h3 {
   padding: 38px 45px 32px;
 }
 .tile-copy .eyebrow {
-  font-size: 7px;
+  font-size: 11px;
   margin-bottom: 20px;
 }
 .tile-copy h3 {
@@ -868,7 +890,7 @@ h3 {
 }
 .tile-copy > p:not(.eyebrow):not(.project-stack) {
   max-width: 320px;
-  font-size: 12px;
+  font-size: 15px;
   color: #92a0b3;
   line-height: 1.8;
   margin-top: 19px;
@@ -887,7 +909,7 @@ h3 {
 }
 .prototype-footer > p {
   font:
-    8px GeistMono,
+    11px GeistMono,
     monospace;
   letter-spacing: 1px;
   color: #91a1b5;
@@ -896,7 +918,7 @@ h3 {
 }
 .prototype-footer > p > span {
   font:
-    10px Geist,
+    12px Geist,
     Arial;
   letter-spacing: 0;
   color: #69798f;
@@ -907,7 +929,7 @@ h3 {
   align-items: center;
 }
 .prototype-footer > div > a {
-  font-size: 10px;
+  font-size: 12px;
   color: #a8b5c7;
 }
 .motion-toggle {
@@ -919,7 +941,7 @@ h3 {
   background: transparent;
   padding: 10px 12px;
   font:
-    9px GeistMono,
+    12px GeistMono,
     monospace;
   min-height: 40px;
 }
@@ -1028,11 +1050,6 @@ html[data-hidden="true"] .signal-particle {
     top: 20px;
     width: 67vw;
   }
-  .system-coordinate {
-    left: 110px;
-    right: 55px;
-    font-size: 6px;
-  }
   .hero-intro {
     max-width: 350px;
     margin-top: 32px;
@@ -1041,33 +1058,12 @@ html[data-hidden="true"] .signal-particle {
     font-size: 26px;
     max-width: 340px;
   }
-  .signal-system figcaption {
-    font-size: 9px;
-    bottom: 48px;
-  }
-  .concept-label {
-    font-size: 6px;
-  }
-  .layer-controls {
-    bottom: -8px;
-    left: 22%;
-    right: 8%;
-  }
-  .layer-controls button {
-    padding: 10px 7px;
-    font-size: 9px;
-  }
-  .layer-note {
-    bottom: -57px;
-    left: 22%;
-    right: 8%;
-  }
   .hero-bottom p {
-    font-size: 7px;
+    font-size: 11px;
     gap: 9px;
   }
   .hero-bottom > a {
-    font-size: 7px;
+    font-size: 11px;
   }
   .spotlight {
     padding-inline: 30px;
@@ -1081,14 +1077,14 @@ html[data-hidden="true"] .signal-particle {
     height: 310px;
   }
   .evidence-caption {
-    font-size: 5px;
+    font-size: 11px;
     max-width: 135px;
   }
   .project-evidence figcaption {
     gap: 8px;
   }
   .view-controls button {
-    font-size: 8px;
+    font-size: 12px;
     padding: 10px 5px;
   }
   .tile-copy {
@@ -1106,7 +1102,7 @@ html[data-hidden="true"] .signal-particle {
     width: calc(100% - 48px);
   }
   .edition {
-    font-size: 7px;
+    font-size: 11px;
     letter-spacing: 1px;
   }
   .site-nav {
@@ -1135,7 +1131,7 @@ html[data-hidden="true"] .signal-particle {
   }
   .button {
     height: 46px;
-    font-size: 10px;
+    font-size: 14px;
     gap: 20px;
   }
   .button-primary {
@@ -1145,41 +1141,6 @@ html[data-hidden="true"] .signal-particle {
     right: -20px;
     top: 132px;
     width: 69vw;
-  }
-  .system-coordinate {
-    left: 85px;
-    right: 50px;
-    top: 15px;
-  }
-  .layer-controls {
-    left: 22%;
-    right: 5%;
-  }
-  .layer-controls button {
-    font-size: 8px;
-    padding: 9px 3px;
-  }
-  .layer-controls button span {
-    font-size: 7px;
-    margin-right: 3px;
-  }
-  .layer-note {
-    font-size: 7px;
-    right: 5%;
-    gap: 9px;
-  }
-  .layer-description {
-    max-width: 125px;
-  }
-  .signal-system figcaption {
-    font-size: 8px;
-    left: 22%;
-    gap: 8px;
-  }
-  .concept-label {
-    font-size: 5px;
-    max-width: 50px;
-    padding-right: 8px;
   }
   .hero-bottom p {
     max-width: 310px;
@@ -1199,7 +1160,7 @@ html[data-hidden="true"] .signal-particle {
     margin-bottom: 38px;
   }
   .section-intro {
-    font-size: 11px;
+    font-size: 15px;
   }
   .spotlight {
     grid-template-columns: 42% 58%;
@@ -1208,10 +1169,10 @@ html[data-hidden="true"] .signal-particle {
   .spotlight-ruler {
     left: 25px;
     right: 25px;
-    font-size: 6px;
+    font-size: 11px;
   }
   .project-type {
-    font-size: 6px;
+    font-size: 11px;
     line-height: 1.7;
     max-width: 180px;
   }
@@ -1219,33 +1180,33 @@ html[data-hidden="true"] .signal-particle {
     font-size: 46px;
   }
   .project-description {
-    font-size: 11px;
+    font-size: 15px;
     max-width: 230px;
   }
   .project-hook {
     font-size: 18px;
   }
   .project-stack {
-    font-size: 7px;
+    font-size: 12px;
     max-width: 235px;
   }
   .screen-frame img {
     height: 260px;
   }
   .screen-toolbar {
-    font-size: 5px;
+    font-size: 11px;
     letter-spacing: 0.4px;
     padding-inline: 8px;
   }
   .screen-toolbar .window-dots {
-    font-size: 5px;
+    font-size: 8px;
     letter-spacing: 1px;
   }
   .project-evidence figcaption {
     display: block;
   }
   .evidence-caption {
-    font-size: 6px;
+    font-size: 11px;
     display: block;
     max-width: 100%;
     text-align: center;
@@ -1255,7 +1216,7 @@ html[data-hidden="true"] .signal-particle {
     margin-top: 5px;
   }
   .view-controls button {
-    font-size: 9px;
+    font-size: 12px;
   }
   .evidence-orbit {
     width: 330px;
@@ -1274,22 +1235,22 @@ html[data-hidden="true"] .signal-particle {
     padding: 28px;
   }
   .tile-copy .eyebrow {
-    font-size: 6px;
+    font-size: 11px;
     line-height: 1.7;
   }
   .tile-copy h3 {
     font-size: 30px;
   }
   .tile-copy > p:not(.eyebrow):not(.project-stack) {
-    font-size: 11px;
+    font-size: 15px;
   }
   .prototype-footer > p {
-    font-size: 7px;
+    font-size: 11px;
     letter-spacing: 0.4px;
     max-width: 210px;
   }
   .prototype-footer > p > span {
-    font-size: 9px;
+    font-size: 12px;
   }
   .prototype-footer > div {
     align-items: end;
@@ -1321,7 +1282,7 @@ html[data-hidden="true"] .signal-particle {
     font-size: 17px;
   }
   .edition {
-    font-size: 6px;
+    font-size: 11px;
     letter-spacing: 0.8px;
     margin-left: auto;
   }
@@ -1336,7 +1297,7 @@ html[data-hidden="true"] .signal-particle {
     display: none;
   }
   .site-nav nav > a:last-child {
-    font-size: 10px;
+    font-size: 12px;
   }
   .nav-contact span {
     margin-left: 8px;
@@ -1362,7 +1323,7 @@ html[data-hidden="true"] .signal-particle {
   }
   .hero-role > span {
     margin-top: 8px;
-    font-size: 11px;
+    font-size: 14px;
     letter-spacing: 0.2px;
   }
   .hero-intro {
@@ -1380,7 +1341,7 @@ html[data-hidden="true"] .signal-particle {
     gap: 26px;
   }
   .button {
-    font-size: 10px;
+    font-size: 14px;
     height: 44px;
   }
   .button-primary {
@@ -1408,56 +1369,9 @@ html[data-hidden="true"] .signal-particle {
   .system-scene {
     margin-top: -8px;
   }
-  .system-coordinate {
-    top: 33px;
-    left: 35px;
-    right: 33px;
-    font-size: 5px;
-    letter-spacing: 1px;
-  }
   .architecture-field {
     width: 100%;
     margin: 0 auto;
-  }
-  .signal-system figcaption {
-    bottom: 107px;
-    left: 33px;
-    right: 33px;
-    font-size: 9px;
-    gap: 12px;
-  }
-  .concept-label {
-    font-size: 6px;
-    max-width: 61px;
-    padding-right: 12px;
-  }
-  .layer-controls {
-    left: 32px;
-    right: 32px;
-    bottom: 51px;
-    padding-block: 3px;
-    gap: 2px;
-  }
-  .layer-controls button {
-    font-size: 10px;
-    padding: 11px 3px;
-    min-height: 44px;
-  }
-  .layer-controls button span {
-    font-size: 7px;
-    margin-right: 4px;
-  }
-  .layer-note {
-    bottom: 1px;
-    left: 36px;
-    right: 36px;
-    font-size: 7px;
-    gap: 12px;
-    align-items: center;
-    min-height: 30px;
-  }
-  .layer-description {
-    max-width: 155px;
   }
   .hero-bottom {
     position: relative;
@@ -1468,7 +1382,7 @@ html[data-hidden="true"] .signal-particle {
     gap: 10px;
   }
   .hero-bottom p {
-    font-size: 5px;
+    font-size: 11px;
     max-width: 190px;
     gap: 6px;
     margin: 0;
@@ -1476,7 +1390,7 @@ html[data-hidden="true"] .signal-particle {
     letter-spacing: 0.4px;
   }
   .hero-bottom > a {
-    font-size: 5px;
+    font-size: 11px;
     gap: 7px;
     white-space: nowrap;
     letter-spacing: 0.5px;
@@ -1496,7 +1410,7 @@ html[data-hidden="true"] .signal-particle {
     margin-bottom: 30px;
   }
   .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
     margin-bottom: 20px;
     letter-spacing: 1px;
   }
@@ -1505,7 +1419,7 @@ html[data-hidden="true"] .signal-particle {
     line-height: 1.05;
   }
   .section-intro {
-    font-size: 11px;
+    font-size: 15px;
     margin-top: 22px;
   }
   .spotlight {
@@ -1517,14 +1431,14 @@ html[data-hidden="true"] .signal-particle {
     top: 19px;
     left: 21px;
     right: 21px;
-    font-size: 5px;
+    font-size: 11px;
     letter-spacing: 0.5px;
   }
   .spotlight-content {
     padding: 13px 0 0;
   }
   .project-type {
-    font-size: 6px;
+    font-size: 11px;
     max-width: 100%;
     margin-bottom: 17px;
   }
@@ -1537,16 +1451,16 @@ html[data-hidden="true"] .signal-particle {
     margin: 22px 0 11px;
   }
   .project-description {
-    font-size: 11px;
+    font-size: 15px;
     max-width: 275px;
   }
   .project-stack {
-    font-size: 7px;
+    font-size: 12px;
     margin: 19px 0;
     max-width: 100%;
   }
   .project-link {
-    font-size: 10px;
+    font-size: 14px;
     padding-bottom: 8px;
   }
   .project-evidence {
@@ -1565,7 +1479,7 @@ html[data-hidden="true"] .signal-particle {
   }
   .screen-toolbar {
     height: 23px;
-    font-size: 4px;
+    font-size: 11px;
     letter-spacing: 0.3px;
   }
   .evidence-orbit {
@@ -1580,14 +1494,14 @@ html[data-hidden="true"] .signal-particle {
     padding-bottom: 8px;
   }
   .evidence-caption {
-    font-size: 5px;
+    font-size: 11px;
     letter-spacing: 0.4px;
   }
   .view-controls {
     margin-top: 8px;
   }
   .view-controls button {
-    font-size: 9px;
+    font-size: 12px;
     min-height: 40px;
     padding-inline: 12px;
   }
@@ -1595,7 +1509,7 @@ html[data-hidden="true"] .signal-particle {
     margin-top: 6px;
   }
   .project-scope summary {
-    font-size: 8px;
+    font-size: 13px;
     padding: 17px 0;
   }
   .project-scope > div {
@@ -1603,7 +1517,7 @@ html[data-hidden="true"] .signal-particle {
     padding-bottom: 20px;
   }
   .project-scope p {
-    font-size: 11px;
+    font-size: 14px;
     line-height: 1.8;
   }
   .project-scope p + p {
@@ -1623,7 +1537,7 @@ html[data-hidden="true"] .signal-particle {
     bottom: 30px;
   }
   .tile-art > span {
-    font-size: 6px;
+    font-size: 11px;
     left: 25px;
     top: 22px;
   }
@@ -1631,14 +1545,14 @@ html[data-hidden="true"] .signal-particle {
     padding: 28px 23px 30px;
   }
   .tile-copy .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
     margin-bottom: 22px;
   }
   .tile-copy h3 {
     font-size: 36px;
   }
   .tile-copy > p:not(.eyebrow):not(.project-stack) {
-    font-size: 12px;
+    font-size: 15px;
     max-width: 290px;
     margin-top: 17px;
   }
@@ -1655,10 +1569,10 @@ html[data-hidden="true"] .signal-particle {
     margin-left: auto;
     text-align: right;
     max-width: 225px;
-    font-size: 6px;
+    font-size: 11px;
   }
   .prototype-footer > p > span {
-    font-size: 8px;
+    font-size: 12px;
   }
   .prototype-footer > div {
     width: 100%;
@@ -1669,7 +1583,7 @@ html[data-hidden="true"] .signal-particle {
     border-top: 1px solid #242b34;
   }
   .prototype-footer > div > a {
-    font-size: 10px;
+    font-size: 12px;
   }
   .motion-toggle {
     min-height: 40px;
@@ -1686,7 +1600,7 @@ html[data-hidden="true"] .signal-particle {
     width: calc(100% - 32px);
   }
   .edition {
-    font-size: 5px;
+    font-size: 11px;
   }
   .edition span {
     margin-inline: 3px;
@@ -1695,7 +1609,7 @@ html[data-hidden="true"] .signal-particle {
     margin-left: 6px;
   }
   .site-nav nav > a:last-child {
-    font-size: 9px;
+    font-size: 12px;
   }
   .brand {
     font-size: 24px;
@@ -1717,25 +1631,6 @@ html[data-hidden="true"] .signal-particle {
     width: calc(100% + 32px);
     margin-inline: -16px;
   }
-  .layer-controls {
-    left: 24px;
-    right: 24px;
-  }
-  .layer-controls button {
-    font-size: 8px;
-  }
-  .layer-controls button span {
-    font-size: 6px;
-  }
-  .layer-note {
-    left: 27px;
-    right: 27px;
-    font-size: 6px;
-  }
-  .signal-system figcaption {
-    left: 26px;
-    font-size: 8px;
-  }
   .hero-bottom p {
     max-width: 170px;
   }
@@ -1745,7 +1640,7 @@ html[data-hidden="true"] .signal-particle {
   .spotlight-ruler {
     left: 18px;
     right: 18px;
-    font-size: 4px;
+    font-size: 11px;
   }
   .spotlight h3 {
     font-size: 53px;
@@ -1761,6 +1656,102 @@ html[data-hidden="true"] .signal-particle {
   }
   .prototype-footer .brand {
     font-size: 23px;
+  }
+}
+@media (max-width: 1150px) {
+  .system-scene {
+    height: min(47vw, 520px);
+  }
+  .about-preview {
+    gap: 35px;
+    grid-template-columns: 1fr 1.8fr;
+  }
+}
+@media (max-width: 850px) {
+  .signal-system {
+    top: 100px;
+  }
+  .about-preview {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .about-preview h2 br {
+    display: none;
+  }
+}
+@media (max-width: 650px) {
+  .signal-system {
+    top: auto;
+    padding-bottom: 0;
+  }
+  .system-scene {
+    height: clamp(235px, 76vw, 470px);
+  }
+  .system-panel {
+    margin-inline: 20px;
+  }
+  .hero-role > span {
+    font-size: 13px;
+  }
+  .edition {
+    letter-spacing: 0.6px;
+  }
+  .site-nav {
+    gap: 12px;
+  }
+  .site-nav nav {
+    margin-left: 0;
+  }
+  .site-nav nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .site-nav nav > a:first-child {
+    display: none;
+  }
+  .hero-bottom > a {
+    display: none;
+  }
+  .hero-bottom p {
+    max-width: none;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .project-link,
+  .view-controls button {
+    min-height: 44px;
+  }
+  .project-type {
+    max-width: none;
+  }
+  .project-evidence figcaption {
+    margin-top: 25px;
+  }
+  .about-preview {
+    padding-block: 40px;
+    gap: 24px;
+  }
+  .about-preview h2 {
+    font-size: 36px;
+  }
+  .about-lead {
+    font-size: 16px;
+  }
+  .about-facts {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-top: 24px;
+  }
+}
+@media (max-width: 360px) {
+  .system-panel {
+    margin-inline: 16px;
+  }
+}
+@media (scripting: none) {
+  .system-instruction {
+    display: none;
   }
 }
 @media (hover: none), (pointer: coarse) {
@@ -1805,11 +1796,5 @@ html[data-motion="reduced"] .system-scene {
   .view-controls,
   .motion-toggle {
     display: none;
-  }
-  .signal-system figcaption {
-    bottom: 80px;
-  }
-  .layer-note {
-    bottom: 30px;
   }
 }
