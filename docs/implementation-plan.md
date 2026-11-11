@@ -1,0 +1,17 @@
+# Portfolio redesign and deployment
+
+Authority: the user's attached MASTER TASK, 11 November 2026. Independent execution is explicitly requested; retain Next.js and TypeScript, spend ₹0, preserve a checkpoint, and never invent career claims.
+
+Design: editorial charcoal surfaces, warm white type, restrained lime accent, generous spacing, a real portrait, and source-backed project case studies. Native scrolling, visible focus, semantic landmarks, reduced motion, and static rendering are global constraints. A downloadable existing resume is retained after identity verification. No contact backend or tracking.
+
+Checkpoint: `checkpoint-portfolio-before-redesign-2026-11-11` at 277b147. Implementation branch: `codex/portfolio-rebuild`. Initial working tree was clean. Work stays in the user-selected workspace under the user's independent-execution instruction.
+
+1. Audit and verify: inspect source, resume, public project repositories, PRs, deployment configuration, and student domain offer. Record URLs in content-evidence.md.
+2. Implement: shared typed content in lib/portfolio.ts; shared shell/navigation/footer and project components; homepage, project index and static detail routes, about, contact, and 404. Only verified internship and education. Project diagrams must be labeled as architecture, never represented as screenshots.
+3. Harden: remove insecure email handler, runtime project fetching, false claims, and unnecessary animation/tracking. Self-host installed Geist fonts. Enable strict build checks and static export. Metadata, social image, sitemap, robots, JSON-LD, and security headers use the actual hosting origin.
+4. Verify: typecheck and lint, production build, static route/link/SEO tests; desktop, tablet, mobile, keyboard and reduced-motion browser checks. Review the final changes independently, fix substantive findings, and repeat affected checks.
+5. Deploy: reuse the confirmed existing Vercel project at https://portfolio-web-ochre-five.vercel.app/. Do not publish the registered fallback Site or create another project. Identify Git connection and production branch, preserve production until verification passes, then deploy and verify the existing URL. Do not change DNS until the user has claimed the student domain. Document local updates, rebuild, redeploy, DNS and remaining actions.
+
+Shared interfaces: Project.slug drives detail routes, metadata and sitemap; all cards use the same Project type. site.url is the canonical origin used by every metadata producer. Review focus: simulated checkout must be explicit; project live URLs must actually work; route handling on static hosting must be checked; resume must be real; mobile navigation must remain keyboard-operable.
+
+Verification ledger: initial typecheck passed. Git ownership mismatch uses invocation-local safe.directory without global changes. User authorized the Vercel team; existing project and exact production source commit were verified. The registered fallback is unused. Current build/lint/typecheck, six export tests, and 24 responsive route checks pass. Review found missing subpage social metadata and mobile Escape focus restoration; regressions reproduced, fixes applied, export/browser checks pass. Header menu close and desktop suppression corrected too. Internship corrected on site and authentic PDF from the user's release-QA update; no additional responsibilities inferred. PDF rendering verified, unrelated PDF content/layout unchanged.

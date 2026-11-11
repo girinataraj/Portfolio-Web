@@ -5,6 +5,15 @@
 
 # next.js
 /.next/
+/.next-build/
+/.next-before-redesign/
+/qa-audit.json
+/qa-runtime-audit.json
+/qa-*.png
+/.openai/
+/qa/
+/err.log
+/err.txt
 /out/
 
 # production

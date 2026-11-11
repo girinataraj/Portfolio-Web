@@ -1,26 +1,37 @@
-import { AboutHero } from "@/components/about-hero"
-import { AboutContent } from "@/components/about-content"
-import { ExperienceSection } from "@/components/experience-section"
-import { EducationSection } from "@/components/education-section"
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "About - Giri N S | MERN Stack Developer",
-  description:
-    "Learn more about Giri N S, a passionate MERN Stack and .NET developer with expertise in building scalable web applications and innovative solutions.",
-  keywords: ["About", "MERN Stack Developer", "Full Stack", "Web Developer", "React", "Node.js", ".NET"],
-}
-
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
+import {
+  AboutSection,
+  ContactSection,
+  ExperienceSection,
+  OpenSourceSection,
+  SkillsSection,
+} from "@/components/portfolio";
+export const metadata: Metadata = pageMetadata(
+  "About",
+  "Meet Giri N S, B.Tech IT student at Nandha Engineering College, graduating in 2027. Explore his engineering interests, internship, and open-source work.",
+  "/about/",
+);
 export default function AboutPage() {
   return (
-    <div
-      className="min-h-screen"
-      style={{ background: "linear-gradient(to bottom, #202328 0%, #111315 60%, #0A0A0A 100%)" }}
-    >
-      <AboutHero />
-      <AboutContent />
+    <>
+      <div className="container page-intro">
+        <p className="eyebrow">THE PERSON BEHIND THE CODE</p>
+        <h1>
+          Always curious.
+          <br />
+          <span className="serif-word">Always building.</span>
+        </h1>
+        <p>
+          I’m Giri N S, an early-career developer interested in the full path
+          from a useful idea to dependable software.
+        </p>
+      </div>
+      <AboutSection extended />
+      <SkillsSection />
       <ExperienceSection />
-      <EducationSection />
-    </div>
-  )
+      <OpenSourceSection />
+      <ContactSection />
+    </>
+  );
 }
