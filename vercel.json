@@ -1,7 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs",
-  "buildCommand": "npm run build",
+  "framework": null,
+  "buildCommand": "node prototypes/build-obsidian.mjs",
+  "installCommand": "",
+  "outputDirectory": "prototype-dist/out",
   "trailingSlash": true,
   "headers": [
     {
