@@ -36,4 +36,17 @@ After the user confirms successful claim, attach the domain to this existing Ver
 - Review fixes verified: Escape from a menu link now restores focus to the toggle; project navigation renders the correct case study and route-specific social metadata. Skip link focuses main; no empty links or browser console errors. Reduced-motion CSS disables animations, transitions, and smooth scrolling.
 - Internship body in both site and PDF now uses the user's corrected railway waiting hall billing dashboard project. PDF rendering and extracted text verify the correction and unchanged content/layout elsewhere.
 
-First preview `dpl_F1pE2eb79ug1ygXeFUNDCPD5EX27` built successfully but failed adapter packaging because `outputDirectory: out` made the Next.js adapter look for build manifests in the export folder. Removed that override; no production alias was changed. Final release evidence will be appended after production verification.
+First preview `dpl_F1pE2eb79ug1ygXeFUNDCPD5EX27` built successfully but failed adapter packaging because `outputDirectory: out` made the Next.js adapter look for build manifests in the export folder. Removed that override; no production alias was changed during this failure.
+
+## Verified production release
+
+- Application release commit: `0b1c293426f1ad34ab93e6f8513b0378e253e4e8`.
+- Verified preview: `dpl_8nPHuBke1eyi9FK6ivcT3vSwypfB`, READY; all eight routes passed browser verification without overflow, missing images, social-image omissions, or console errors.
+- Production: `dpl_7PLfEak9k1wmv64Mpgeid3Tdrd7H`, READY on existing project and branch `main`.
+- Public origin https://portfolio-web-ochre-five.vercel.app/ serves the redesign with corrected internship content. All eight pages return 200 and their correct canonical URLs. Sitemap, robots, social card, icon, and original project screenshot return 200. Unknown page returns 404.
+- Public responses include `X-Content-Type-Options: nosniff` and `X-Frame-Options: DENY`. The publicly downloaded resume matches the corrected local PDF by SHA-256.
+- Both `girinataraj.tech` and `www.girinataraj.tech` remain assigned to the production deployment. No DNS was changed.
+- The prior production deployment and local checkpoint tag remain available. No force push or project migration was used. The final documentation-only commit records this verified application release; it does not change site behavior.
+- Anonymous HTTP checks against the protected preview encountered authentication responses and were not counted as content verification. Preview content was checked in the authenticated browser; the production checks above used public unauthenticated HTTP requests successfully.
+
+Remaining manual work: use the verified student account to redeem the Name.com benefit at a confirmed zero-price checkout, then confirm the successfully claimed domain before any DNS change. SAAI App and the placement dashboard need verifiable source/asset details before inclusion; no guessed project claims or links were published.

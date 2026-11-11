@@ -1,6 +1,6 @@
 # Portfolio content evidence
 
-Read-only verification on 11 November 2026. Repository descriptions establish project scope, not independent production or business-outcome claims. No credentials or private operational details were copied.
+Initial read-only verification on 11 November 2026, followed by the user's internship correction and a verified PDF edit. Repository descriptions establish project scope, not independent production or business-outcome claims. No credentials or private operational details were copied.
 
 ## Identity, education and contact
 
