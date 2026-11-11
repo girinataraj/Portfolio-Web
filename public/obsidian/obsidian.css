@@ -304,8 +304,124 @@ h1 {
   overflow: visible;
 }
 .core {
-  animation: core-arrive 1400ms var(--ease) both;
+  animation: core-arrive 1400ms var(--ease) backwards;
   transform-origin: 385px 340px;
+  transition:
+    opacity 620ms var(--ease),
+    transform 620ms var(--ease);
+}
+.has-interacted .core {
+  animation: none;
+}
+.signal-system[data-layer="interface"] .core {
+  opacity: 0.82;
+}
+.signal-system[data-layer="services"] .core {
+  opacity: 0.48;
+  transform: scale(0.88);
+}
+.signal-system[data-layer="intelligence"] .core {
+  opacity: 0.64;
+  transform: scale(0.96);
+}
+.system-state {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  transform-origin: 385px 340px;
+  transition:
+    opacity 420ms var(--ease),
+    transform 620ms var(--ease);
+}
+.signal-system[data-layer="interface"] .state-interface,
+.signal-system[data-layer="services"] .state-services,
+.signal-system[data-layer="intelligence"] .state-intelligence {
+  opacity: 1;
+  transform: none;
+}
+.state-surface {
+  fill: #0c1823;
+  fill-opacity: 0.94;
+  stroke: #9beaff;
+  stroke-width: 1.5;
+}
+.state-rule {
+  stroke: #90b9ce;
+  stroke-width: 1.5;
+}
+.state-dot,
+.retrieval-point {
+  fill: #c8f7ff;
+}
+.state-card {
+  fill: #1c3748;
+  stroke: #678fa8;
+  stroke-width: 1;
+}
+.state-highlight {
+  fill: #74d5ed;
+  fill-opacity: 0.33;
+  stroke: #a9efff;
+  stroke-width: 1;
+}
+.state-cursor {
+  fill: #d3f8ff;
+  stroke: #091a26;
+  stroke-width: 1.5;
+}
+.state-focus {
+  fill: none;
+  stroke: #b3f0ff;
+  stroke-width: 1.5;
+}
+.state-path {
+  fill: none;
+  stroke: #9beaff;
+  stroke-width: 2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.state-return {
+  opacity: 0.48;
+  stroke-width: 1;
+}
+.state-hub {
+  fill: #102b3b;
+  stroke: #b9f3ff;
+  stroke-width: 2;
+}
+.state-hub-cross {
+  stroke: #c5f6ff;
+  stroke-width: 2;
+}
+.retrieval-lens {
+  fill: #15344c;
+  fill-opacity: 0.28;
+  stroke: #a9eaff;
+  stroke-width: 2;
+}
+.lens-inner {
+  fill: none;
+  stroke-width: 1;
+  stroke-dasharray: 3 7;
+}
+.state-check {
+  fill: none;
+  stroke: #c4f8ff;
+  stroke-width: 2;
+}
+.signal-system[data-layer="interface"] .state-interface .state-path,
+.signal-system[data-layer="services"] .state-services .state-path,
+.signal-system[data-layer="intelligence"] .state-intelligence .state-path {
+  animation: state-trace 720ms var(--ease) both;
+}
+@keyframes state-trace {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 .core-seam {
   opacity: 0.6;
@@ -365,6 +481,21 @@ h1 {
 .particle-b {
   offset-path: path("M596 468 510 420 438 386 385 339");
   animation-delay: -4.5s;
+}
+.signal-system[data-layer="interface"] .particle-b {
+  display: none;
+}
+.signal-system[data-layer="services"] .particle-a {
+  offset-path: path("M579 200 508 240 385 339 590 323");
+}
+.signal-system[data-layer="services"] .particle-b {
+  offset-path: path("M385 339 249 414 185 414");
+}
+.signal-system[data-layer="intelligence"] .particle-a {
+  offset-path: path("M182 288 293 288 385 339 494 395 595 395");
+}
+.signal-system[data-layer="intelligence"] .particle-b {
+  offset-path: path("M514 210 456 270 385 339");
 }
 .hero-bottom {
   position: absolute;
@@ -1683,6 +1814,9 @@ html[data-hidden="true"] .signal-particle {
   .signal-system {
     top: auto;
     padding-bottom: 0;
+  }
+  .hero-actions {
+    margin-bottom: 14px;
   }
   .system-scene {
     height: clamp(235px, 76vw, 470px);

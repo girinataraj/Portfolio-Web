@@ -56,4 +56,8 @@ This correction changes only the prototype hero markup/styles and these notes. P
 
 The full V3 rebuild remains unapproved. Present this prototype iteration, then stop for review.
 
+## Final validation pass
+
+See `obsidian-final-prototype-review.md` for the final review package, verified transition behavior, complete capture index and limitations. The existing core now reveals a different structural diagram for each layer. Mobile actions move ahead of the field, keeping Work visible early while preserving the approved name hierarchy. This supersedes the earlier mobile action ordering; no remaining V3 pages or production integration were implemented.
+
 The Next.js adapter returned 404 for the standalone HTML, including a compiled static HTML route. The preview therefore uses Vercel's supported per-deployment [static framework/build/output overrides](https://vercel.com/docs/project-configuration/vercel-json), scoped to this branch. Existing production settings and deployment remain intact. The hosted preview URL and observed verification are supplied with the prototype handoff. Do not describe this as a released V3 portfolio. Production main remains at `d217bd824b5a56ff4db3f955d36faf3c8d9cf297`.

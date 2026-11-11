@@ -74,20 +74,21 @@
   const layers = {
     interface: [
       "React · TypeScript",
-      "Clear interfaces. Thoughtful interactions.",
+      "Explore input, layout and feedback in a visible interface plane.",
     ],
     services: [
       "Node.js · Python",
-      "APIs, shared state and dependable workflows.",
+      "Follow a request as it branches through connected service nodes.",
     ],
     intelligence: [
       "RAG · MCP",
-      "Retrieval, grounded answers and connected tools.",
+      "Trace source fragments through retrieval to a grounded answer.",
     ],
   };
   document.querySelectorAll(".layer-controls button").forEach((button) => {
     button.addEventListener("click", () => {
       const layer = button.dataset.layer;
+      system.classList.add("has-interacted");
       system.dataset.layer = layer;
       document
         .querySelectorAll(".layer-controls button")
