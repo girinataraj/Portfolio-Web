@@ -29,9 +29,10 @@ Build generates `out/`. `npm start` serves it at http://127.0.0.1:3000; set `POR
 
 - Edit `lib/portfolio.ts` for personal details, skills, project descriptions, technology, repository links, boundaries, and merged contributions. Record evidence in `docs/content-evidence.md`.
 - Add a project with a unique `slug` to generate its case-study route and sitemap entry automatically. Do not equate repository functionality with production availability or business outcomes.
-- Shared sections are in `components/portfolio.tsx`; the small client menu is in `components/navigation.tsx`; design tokens and responsive styles are in `app/globals.css`.
+- Shared sections are in `components/portfolio.tsx`; the client menu is in `components/navigation.tsx`; design tokens and responsive styles are in `app/globals.css`. Route-aware motion is in `components/experience-motion.tsx`, and local project studies are in `components/project-study.tsx` / `lib/story-model.ts`. See `docs/design-system-v2.md` for maintenance.
 - Replace `public/resume/Giri-Resume.pdf` only with an authentic updated resume. The existing PDF has no issue date; only its internship body was corrected to the user's supplied railway dashboard project. The rest of its content and layout is preserved.
-- Put authentic screenshots in `public/projects/` with captions and alt text. The QueueLess image is from its repository. Other visuals are labeled architecture illustrations.
+- Six case studies include two user-approved iGEN production projects. Keep individual contributions separate from product-level features. The existing PDF does not yet include iGEN; this limitation is disclosed on the site.
+- Put authentic screenshots in `public/projects/` with captions and alt text. `docs/v2-assets.md` records QueueLess development screenshots, original Sacred Commerce artwork, and optimized derivatives. Company covers are original privacy-safe conceptual illustrations.
 - `public/og-image.png` is the 1200 × 630 sharing card; `public/icon.svg` is the favicon.
 
 ## Existing Vercel deployment
@@ -50,6 +51,8 @@ Do not change DNS until the user has claimed the domain. Add the owned domain to
 
 ## Preservation and security
 
-Original clean commit `277b147` is preserved by `checkpoint-portfolio-before-redesign-2026-11-11`; implementation branch is `codex/portfolio-rebuild`. No force push is needed. Old generated cache was preserved as ignored `.next-before-redesign/` after inherited Windows permissions blocked builds.
+Original clean commit `277b147` is preserved by `checkpoint-portfolio-before-redesign-2026-11-11`. V1 commit `fd3f3cd` is preserved by `checkpoint-portfolio-v1-2026-11-11`; V2 implementation branch is `codex/interactive-portfolio-v2`. No force push is needed. Old generated cache was preserved as ignored `.next-before-redesign/` after inherited Windows permissions blocked builds.
 
 Generic employment, university, certifications, statistics, stock project cards, credential-logging email code, and unused template UI/animation dependencies were removed. Environment files and `.vercel` credentials remain ignored. The ignored `.openai/` registration is an unpublished fallback from before the existing Vercel URL was supplied; it is unused and must not be deployed for this task.
+
+V2 QA, measured Lighthouse scores, independent review fixes and local before/after evidence are documented in `docs/qa-v2.md`. After build, `node scripts/verify-release.mjs https://portfolio-web-ochre-five.vercel.app/ qa/v2/production-http.json` verifies public pages, metadata, assets, security headers, unknown-page status and the resume hash.

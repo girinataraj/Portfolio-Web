@@ -12,6 +12,34 @@ export function Navigation() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const brandRef = useRef<HTMLAnchorElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const desktop = matchMedia("(min-width: 761px)");
+    let focusedArea: "mobile" | "desktop" | null = null;
+    const trackFocus = (event: FocusEvent) => {
+      const target = event.target as HTMLElement;
+      focusedArea =
+        target === toggleRef.current || menuRef.current?.contains(target)
+          ? "mobile"
+          : target.closest(".desktop-nav")
+            ? "desktop"
+            : null;
+    };
+    const restore = () => {
+      if (
+        (desktop.matches && focusedArea === "mobile") ||
+        (!desktop.matches && focusedArea === "desktop")
+      )
+        brandRef.current?.focus();
+    };
+    document.addEventListener("focusin", trackFocus);
+    desktop.addEventListener("change", restore);
+    return () => {
+      document.removeEventListener("focusin", trackFocus);
+      desktop.removeEventListener("change", restore);
+    };
+  }, []);
   useEffect(() => {
     if (!open) return;
     const close = (event: KeyboardEvent) => {
@@ -21,12 +49,30 @@ export function Navigation() {
       }
     };
     window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
+    const desktop = matchMedia("(min-width: 761px)");
+    const resize = () => {
+      if (desktop.matches) {
+        if (menuRef.current?.contains(document.activeElement))
+          brandRef.current?.focus();
+        setOpen(false);
+      }
+    };
+    desktop.addEventListener("change", resize);
+    return () => {
+      window.removeEventListener("keydown", close);
+      desktop.removeEventListener("change", resize);
+    };
   }, [open]);
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link href="/" className="wordmark" aria-label="Giri N S, home" onClick={() => setOpen(false)}>
+        <Link
+          ref={brandRef}
+          href="/"
+          className="wordmark"
+          aria-label="Giri N S, home"
+          onClick={() => setOpen(false)}
+        >
           giri<span className="accent">.</span>
           <span className="wordmark-suffix"> / developer</span>
         </Link>
@@ -41,7 +87,11 @@ export function Navigation() {
             </Link>
           ))}
         </nav>
-        <Link href="/contact/" className="header-contact" onClick={() => setOpen(false)}>
+        <Link
+          href="/contact/"
+          className="header-contact"
+          onClick={() => setOpen(false)}
+        >
           Let’s talk <ArrowUpRight size={15} aria-hidden="true" />
         </Link>
         <button
@@ -56,6 +106,7 @@ export function Navigation() {
         </button>
       </div>
       <nav
+        ref={menuRef}
         id="mobile-navigation"
         className="mobile-nav"
         aria-label="Mobile navigation"

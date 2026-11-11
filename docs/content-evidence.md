@@ -60,9 +60,19 @@ Old portfolio claims about Tech Solutions Inc., employment from 2021, 10+ client
 
 Merged status was checked with read-only GitHub pull-request API responses, not inferred from titles or search output.
 
-## Candidate content not verified
+## iGEN production projects — user-confirmed and approved for V2
 
-No public `SAAI-App` or `Student-Training-and-Placement-Dashboard` repository found in the user's public repository search. Do not invent descriptions or link to guessed repositories. The resume supports a separate **Student Management System for HoD** (January 2025), with student/attendance/results dashboards and TypeScript/React; do not silently equate it to a placement dashboard.
+On 11 November 2026 the user directly confirmed: **Software Developer Intern, iGEN Services and Solutions, May–August 2026**. These details are not in the older workspace PDF. The PDF's January 2025 Student Management System for HoD is a separate project and is not equated with the placement system.
+
+**SAAI Physiotherapy:** production and active-use status confirmed by the user; the [official Google Play listing](https://play.google.com/store/apps/details?id=com.saai.physiotherapy) independently confirms the product, iGenSS publisher, authorized-staff purpose, clinical records/evaluations/treatment and role restrictions. Individual contribution approved by the user: contributed to clinic-management workflows and dashboard functionality. The user directly confirmed React, TypeScript, Node.js, Express.js, PostgreSQL and REST APIs. Product-level features from the user/public listing remain separate from individual contribution. Use “View on Google Play”; no repository or internal API links. No Play screenshots reused because permission was not established; all portfolio artwork is original abstract illustration without patient records.
+
+**Student Training & Placement Management System:** user confirms live private production, iGEN organization, general purpose and product-level records/training/courses/batches/attendance/progress/recruitment/analytics scope. Individual contribution: placement-tracking dashboard interfaces used to monitor students' placement progress. User directly confirmed React, TypeScript, Vite, SQL Server and separately Node.js backend. To retain the approved wording, backend details are omitted from the public page. No production URL, private source links, internal screenshots, student records or recruitment information are requested or published. Cover is an original conceptual illustration.
+
+Approval record: the complete descriptions, technology lists, contribution/product-scope separation, public link and privacy boundaries were shown to the user. The user approved wording/status/presentation/privacy, conditional on verified technology details, and then explicitly replied **“Yes, these technologies are correct”** after being told the older PDF omits them. This resolves the condition. No detailed private architecture is inferred. Resume remains the existing authentic PDF and does not yet contain the newly confirmed iGEN experience.
+
+## Earlier candidate search limitations
+
+The initial public repository search did not find these company projects; the user later clarified they are not publicly open-source. Their absence from public GitHub is not evidence against the user-confirmed production status. Do not guess repository URLs.
 
 ## Supported skill groups
 

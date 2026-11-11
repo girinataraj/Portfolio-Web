@@ -1,6 +1,10 @@
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { resolve, extname, sep } from "node:path";
+import { gzip } from "node:zlib";
+import { promisify } from "node:util";
+import { segmentFallback } from "../lib/static-export.mjs";
+const compress = promisify(gzip);
 const root = resolve("out");
 const port = Number(process.env.PORT || 3000);
 const mime = {
@@ -29,7 +33,14 @@ createServer(async (req, res) => {
     }
     const info = await stat(file).catch(() => null);
     if (info?.isDirectory()) file = resolve(file, "index.html");
-    const data = await readFile(file).catch(() => null);
+    let data = await readFile(file).catch(() => null);
+    const segmentPath = !data && segmentFallback(pathname);
+    if (segmentPath) {
+      const fallbackFile = resolve(root, "." + segmentPath);
+      if (fallbackFile.startsWith(root + sep)) {
+        data = await readFile(fallbackFile).catch(() => null);
+      }
+    }
     if (!data) {
       const fallback = await readFile(resolve(root, "404.html")).catch(
         () => "Page not found. Run npm run build first.",
@@ -37,12 +48,19 @@ createServer(async (req, res) => {
       res.writeHead(404, { "Content-Type": "text/html" }).end(fallback);
       return;
     }
+    const contentType = mime[extname(file)] ?? "application/octet-stream";
+    const compressed =
+      /\bgzip\b/.test(req.headers["accept-encoding"] ?? "") &&
+      /^(text\/|application\/(json|xml)|image\/svg)/.test(contentType);
+    const body = compressed ? await compress(data) : data;
     res
       .writeHead(200, {
-        "Content-Type": mime[extname(file)] ?? "application/octet-stream",
+        "Content-Type": contentType,
         "X-Content-Type-Options": "nosniff",
+        Vary: "Accept-Encoding",
+        ...(compressed ? { "Content-Encoding": "gzip" } : {}),
       })
-      .end(data);
+      .end(body);
   } catch {
     if (!res.headersSent) res.writeHead(400);
     res.end("Bad request");

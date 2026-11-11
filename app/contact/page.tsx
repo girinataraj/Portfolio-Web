@@ -64,7 +64,7 @@ export default function ContactPage() {
           <Download aria-hidden="true" />
           <div>
             <h2>Resume</h2>
-            <p>Download the existing PDF.</p>
+            <p>Existing PDF; iGEN details are on this site.</p>
           </div>
           <ArrowUpRight aria-hidden="true" />
         </a>

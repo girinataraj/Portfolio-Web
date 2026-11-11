@@ -14,16 +14,85 @@ export type Project = {
   category: string;
   summary: string;
   stack: string[];
-  repo: string;
+  repo?: string;
+  publicUrl?: string;
+  publicLabel?: string;
+  organization?: string;
+  status?: string;
   problem: string;
   contribution: string;
   features: string[];
   boundary: string;
   diagram: string[];
-  accent: "lime" | "sand" | "blue" | "lilac";
+  accent: "lime" | "sand" | "blue" | "lilac" | "teal" | "orange";
 };
 
 export const projects: Project[] = [
+  {
+    slug: "saai-physiotherapy",
+    name: "SAAI Physiotherapy",
+    category: "Published application",
+    organization: "iGEN Services and Solutions",
+    status: "Published on Google Play",
+    publicUrl:
+      "https://play.google.com/store/apps/details?id=com.saai.physiotherapy",
+    publicLabel: "View on Google Play",
+    summary:
+      "A published physiotherapy clinic application for authorized staff, clinical records, evaluations, and treatment workflows.",
+    stack: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "REST APIs",
+    ],
+    problem:
+      "A clinic-management application for authorized physiotherapy staff.",
+    contribution:
+      "During my Software Developer Internship (May–August 2026), I contributed to building SAAI’s clinic-management workflows and dashboard functionality.",
+    features: [
+      "Patient management and therapist scheduling",
+      "Role-based access and clinical assessments",
+      "Treatment planning and follow-up workflows",
+    ],
+    boundary:
+      "Clinic-managed authorization is required. This portfolio uses original privacy-safe illustrations; it displays no patient records, internal APIs, credentials, private source code, or company screenshots.",
+    diagram: [
+      "Clinic-managed access",
+      "Authorized staff",
+      "Clinical workflows",
+    ],
+    accent: "teal",
+  },
+  {
+    slug: "student-placement-system",
+    name: "Student Training & Placement Management System",
+    category: "Private production application",
+    organization: "iGEN Services and Solutions",
+    status: "Live · Private Production",
+    summary:
+      "A live Student Training & Placement Management System developed during my association with iGEN Services and Solutions.",
+    stack: ["React", "TypeScript", "Vite", "SQL Server"],
+    problem:
+      "An internal platform for student training and placement operations.",
+    contribution:
+      "During my Software Developer Internship (May–August 2026), I contributed to the placement tracking dashboard, focusing on interfaces used to monitor students’ placement progress.",
+    features: [
+      "Student records and training information",
+      "Courses, batches, and attendance",
+      "Placement monitoring and recruitment coordination",
+      "Dashboard analytics",
+    ],
+    boundary:
+      "Original conceptual illustrations only. No student records, confidential recruitment details, internal screenshots, credentials, private endpoints, or source code are published. The private production URL is not shared.",
+    diagram: [
+      "Training & placement",
+      "Private production",
+      "Confidential by design",
+    ],
+    accent: "orange",
+  },
   {
     slug: "queueless-pulse",
     name: "QueueLess Pulse",

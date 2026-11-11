@@ -49,4 +49,10 @@ First preview `dpl_F1pE2eb79ug1ygXeFUNDCPD5EX27` built successfully but failed a
 - The prior production deployment and local checkpoint tag remain available. No force push or project migration was used. The final documentation-only commit records this verified application release; it does not change site behavior.
 - Anonymous HTTP checks against the protected preview encountered authentication responses and were not counted as content verification. Preview content was checked in the authenticated browser; the production checks above used public unauthenticated HTTP requests successfully.
 
-Remaining manual work: use the verified student account to redeem the Name.com benefit at a confirmed zero-price checkout, then confirm the successfully claimed domain before any DNS change. SAAI App and the placement dashboard need verifiable source/asset details before inclusion; no guessed project claims or links were published.
+Remaining manual work: use the verified student account to redeem the Name.com benefit at a confirmed zero-price checkout, then confirm the successfully claimed domain before any DNS change. V1 omitted SAAI and placement pending factual details; the user has since supplied and approved those details for V2 (see `content-evidence.md`).
+
+## V2 release preparation
+
+V1 READY deployment `dpl_EQziMvoBERfUmtXCVy3UyahjmhBJ`, commit `fd3f3cd71cb4cb73df493075a37c9890bd1bf2c7`, remains the rollback reference. Local tag `checkpoint-portfolio-v1-2026-11-11` preserves that source. The V2 branch is `codex/interactive-portfolio-v2`. Existing project/team/Git/production branch and all domain aliases are retained; no new project, DNS or registration action is needed.
+
+Local verification and measured scores are in `qa-v2.md`; design and motion maintenance are in `design-system-v2.md`. Push the feature branch for a preview, verify the hosted result, then fast-forward `main`. Add actual preview and production evidence after those steps pass.

@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/portfolio";
 import { site } from "@/lib/portfolio";
+import { ExperienceMotion } from "@/components/experience-motion";
 import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Giri N S — Thoughtful code. Useful things.",
+        alt: "Giri N S — Engineering with intent.",
       },
     ],
   },
@@ -42,8 +43,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#141513",
-  colorScheme: "dark",
+  themeColor: "#f0eee8",
+  colorScheme: "light",
 };
 export default function RootLayout({
   children,
@@ -71,10 +72,14 @@ export default function RootLayout({
   return (
     <html lang="en" id="top">
       <body className={`${GeistSans.variable} ${GeistMono.variable}`}>
+        <noscript>
+          <style>{`.menu-toggle,.motion-toggle,.study-controls,.gallery-controls,.study-bottom>div{display:none!important}@media(max-width:760px){.header-inner{flex-wrap:wrap;height:auto;min-height:72px;row-gap:0;padding-block:16px}.desktop-nav{display:flex;order:5;width:100%;margin-left:0;gap:24px;padding-top:13px}.desktop-nav a{font-size:11px}}`}</style>
+        </noscript>
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
         <Navigation />
+        <ExperienceMotion />
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>

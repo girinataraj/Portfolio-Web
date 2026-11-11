@@ -23,7 +23,7 @@ export function pageMetadata(
           url: "/og-image.png",
           width: 1200,
           height: 630,
-          alt: "Giri N S — Thoughtful code. Useful things.",
+          alt: "Giri N S — Engineering with intent.",
         },
       ],
     },
