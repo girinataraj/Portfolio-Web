@@ -6,7 +6,10 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 const links = [
   { href: "/projects/", label: "Work" },
   { href: "/about/", label: "About" },
-  { href: "/#open-source", label: "Open source" },
+  { href: "/experience/", label: "Experience" },
+  { href: "/technologies/", label: "Technologies" },
+  { href: "/open-source/", label: "Open source" },
+  { href: "/lab/", label: "Lab" },
 ];
 export function Navigation() {
   const pathname = usePathname();
@@ -15,7 +18,7 @@ export function Navigation() {
   const brandRef = useRef<HTMLAnchorElement>(null);
   const menuRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    const desktop = matchMedia("(min-width: 761px)");
+    const desktop = matchMedia("(min-width: 1101px)");
     let focusedArea: "mobile" | "desktop" | null = null;
     const trackFocus = (event: FocusEvent) => {
       const target = event.target as HTMLElement;
@@ -49,7 +52,7 @@ export function Navigation() {
       }
     };
     window.addEventListener("keydown", close);
-    const desktop = matchMedia("(min-width: 761px)");
+    const desktop = matchMedia("(min-width: 1101px)");
     const resize = () => {
       if (desktop.matches) {
         if (menuRef.current?.contains(document.activeElement))
@@ -76,7 +79,7 @@ export function Navigation() {
           giri<span className="accent">.</span>
           <span className="brand-ns">ns</span>
           <span className="wordmark-suffix" aria-hidden="true">
-            OBSIDIAN / V3
+            OBSIDIAN / V3.1
           </span>
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">

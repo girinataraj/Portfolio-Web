@@ -1,3 +1,4 @@
+import { ContactCopy } from "@/components/contact-copy";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
 import {
@@ -43,6 +44,7 @@ export default function ContactPage() {
           <ArrowUpRight aria-hidden="true" />
         </span>
       </a>
+      <ContactCopy />
       <div className="contact-options">
         <ExternalLink href={site.github}>
           <Github aria-hidden="true" />

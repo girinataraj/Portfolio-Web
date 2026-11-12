@@ -1,4 +1,5 @@
 "use client";
+import { ScreenshotViewer } from "./screenshot-viewer";
 import { useId, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { clampStep, storySteps } from "@/lib/story-model";
@@ -129,37 +130,42 @@ export function QueueGallery() {
           </button>
         </div>
       </div>
-      <picture>
-        <source
-          media="(max-width:760px)"
-          width="390"
-          height={view === "customer" ? 1203 : 1085}
-          srcSet={
-            view === "customer"
-              ? "/projects/v2/queue-customer-mobile.webp"
-              : "/projects/v2/queue-staff-mobile.webp"
-          }
-        />
-        <img
-          key={view}
-          src={`/projects/v2/queue-${view}-desktop.webp`}
-          srcSet={
-            view === "customer"
-              ? "/projects/v2/queue-customer-768.webp 768w, /projects/v2/queue-customer-desktop.webp 1366w"
-              : "/projects/v2/queue-staff-640.webp 640w, /projects/v2/queue-staff-desktop.webp 1366w"
-          }
-          sizes="(max-width: 760px) 92vw, 65vw"
-          width="1366"
-          height={view === "customer" ? 1198 : 1067}
-          loading="lazy"
-          decoding="async"
-          alt={
-            view === "customer"
-              ? "Original QueueLess customer interface showing service entry and ticket tracking"
-              : "Original QueueLess staff interface showing queue management actions"
-          }
-        />
-      </picture>
+      <ScreenshotViewer
+        src={`/projects/v2/queue-${view}-desktop.webp`}
+        alt={`Original QueueLess ${view} development screenshot with synthetic data`}
+      >
+        <picture>
+          <source
+            media="(max-width:760px)"
+            width="390"
+            height={view === "customer" ? 1203 : 1085}
+            srcSet={
+              view === "customer"
+                ? "/projects/v2/queue-customer-mobile.webp"
+                : "/projects/v2/queue-staff-mobile.webp"
+            }
+          />
+          <img
+            key={view}
+            src={`/projects/v2/queue-${view}-desktop.webp`}
+            srcSet={
+              view === "customer"
+                ? "/projects/v2/queue-customer-768.webp 768w, /projects/v2/queue-customer-desktop.webp 1366w"
+                : "/projects/v2/queue-staff-640.webp 640w, /projects/v2/queue-staff-desktop.webp 1366w"
+            }
+            sizes="(max-width: 760px) 92vw, 65vw"
+            width="1366"
+            height={view === "customer" ? 1198 : 1067}
+            loading="lazy"
+            decoding="async"
+            alt={
+              view === "customer"
+                ? "Original QueueLess customer interface showing service entry and ticket tracking"
+                : "Original QueueLess staff interface showing queue management actions"
+            }
+          />
+        </picture>
+      </ScreenshotViewer>
       <figcaption>
         Original development screenshot · synthetic demonstration data · from
         the project repository.

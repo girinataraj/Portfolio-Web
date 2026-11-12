@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
-import { WorkSection } from "@/components/portfolio";
+import { ProjectCard } from "@/components/project-card";
+import { ProjectExplorer } from "@/components/project-explorer";
+import { projects } from "@/lib/portfolio";
 export const metadata: Metadata = pageMetadata(
   "Selected projects",
   "Explore Giri N S's full-stack and AI projects, engineering decisions, source code, and implementation boundaries.",
@@ -21,7 +23,22 @@ export default function ProjectsPage() {
           look at what I’ve built and the decisions behind it.
         </p>
       </div>
-      <WorkSection all />
+      <section className="container archive-section">
+        <ProjectExplorer
+          entries={projects.map((p) => ({
+            slug: p.slug,
+            category: p.organization
+              ? "Production software"
+              : ["closefuture-agent", "resume-rag"].includes(p.slug)
+                ? "Applied AI"
+                : "Independent systems",
+          }))}
+        >
+          {projects.map((p, index) => (
+            <ProjectCard key={p.slug} project={p} index={index} />
+          ))}
+        </ProjectExplorer>
+      </section>
     </>
   );
 }

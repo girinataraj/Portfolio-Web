@@ -55,82 +55,64 @@ export function MotionToggle() {
 export function ExperienceMotion() {
   const pathname = usePathname();
   useEffect(() => {
-    const root = document.documentElement;
-    root.dataset.enhanced = "true";
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    const fine = matchMedia("(hover: hover) and (pointer: fine)");
+    const root = document.documentElement;
     let observer: IntersectionObserver | null = null;
-    let frame = 0;
-    let rect: DOMRect | null = null;
     const animations: Animation[] = [];
-    const depthElements = [
-      ...document.querySelectorAll<HTMLElement>("[data-depth]"),
-    ];
     const permitted = () =>
-      !reduced.matches && root.dataset.motion !== "reduced";
-    const enter = (event: PointerEvent) => {
-      rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
-    };
-    const move = (event: PointerEvent) => {
-      if (!permitted() || !fine.matches || !rect) return;
-      const el = event.currentTarget as HTMLElement;
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        el.style.setProperty("--depth-x", `${x * 6}deg`);
-        el.style.setProperty("--depth-y", `${-y * 6}deg`);
-      });
-    };
-    const leave = (event: PointerEvent) => {
-      const el = event.currentTarget as HTMLElement;
-      cancelAnimationFrame(frame);
-      el.style.setProperty("--depth-x", "0deg");
-      el.style.setProperty("--depth-y", "0deg");
-    };
+      !reduced.matches && root.dataset.motion !== "reduced" && !document.hidden;
     const setup = () => {
       observer?.disconnect();
       animations.forEach((a) => a.cancel());
-      depthElements.forEach((el) => {
-        el.style.setProperty("--depth-x", "0deg");
-        el.style.setProperty("--depth-y", "0deg");
-      });
       if (!permitted()) return;
       observer = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
             const el = entry.target as HTMLElement;
-            animations.push(
-              el.animate(
-                [
-                  { transform: "translateY(24px)", opacity: 0.72 },
-                  { transform: "translateY(0)", opacity: 1 },
-                ],
-                { duration: 720, easing: "cubic-bezier(.22,1,.36,1)" },
-              ),
-            );
             observer?.unobserve(el);
-          });
+            if (el.dataset.seen) continue;
+            el.dataset.seen = "true";
+            const visual = el.querySelector(".visual-link");
+            const heading = el.querySelector("h2");
+            if (visual)
+              animations.push(
+                visual.animate(
+                  [
+                    {
+                      transform:
+                        "perspective(1000px) rotateX(5deg) translateY(20px)",
+                      filter: "brightness(.75)",
+                    },
+                    { transform: "none", filter: "brightness(1)" },
+                  ],
+                  { duration: 750, easing: "cubic-bezier(.2,.8,.2,1)" },
+                ),
+              );
+            else if (heading)
+              animations.push(
+                heading.animate(
+                  [
+                    { transform: "translateX(14px)" },
+                    { transform: "translateX(0)" },
+                  ],
+                  { duration: 550, easing: "cubic-bezier(.2,.8,.2,1)" },
+                ),
+              );
+          }
         },
-        { threshold: 0.08 },
+        { threshold: 0.12 },
       );
       document
-        .querySelectorAll("[data-reveal]")
+        .querySelectorAll(
+          ".project-card[data-reveal],.section-heading[data-reveal]",
+        )
         .forEach((el) => observer?.observe(el));
     };
-    depthElements.forEach((el) => {
-      el.addEventListener("pointerenter", enter);
-      el.addEventListener("pointermove", move);
-      el.addEventListener("pointerleave", leave);
-    });
-    reduced.addEventListener("change", setup);
-    window.addEventListener("portfolio:motion", setup);
-    setup();
     const focusAnchor = (event: MouseEvent) => {
-      const link = (event.target as Element)?.closest('a[href^="#"]');
-      if (!link) return;
-      const href = link.getAttribute("href");
+      if (!(event.target instanceof Element)) return;
+      const link = event.target.closest('a[href^="#"]');
+      const href = link?.getAttribute("href");
       if (!href || href === "#") return;
       const target = document.getElementById(href.slice(1));
       if (target) {
@@ -139,19 +121,18 @@ export function ExperienceMotion() {
         target.focus({ preventScroll: true });
       }
     };
+    reduced.addEventListener("change", setup);
+    window.addEventListener("portfolio:motion", setup);
+    document.addEventListener("visibilitychange", setup);
     document.addEventListener("click", focusAnchor);
+    setup();
     return () => {
-      document.removeEventListener("click", focusAnchor);
       observer?.disconnect();
-      cancelAnimationFrame(frame);
       animations.forEach((a) => a.cancel());
       reduced.removeEventListener("change", setup);
       window.removeEventListener("portfolio:motion", setup);
-      depthElements.forEach((el) => {
-        el.removeEventListener("pointerenter", enter);
-        el.removeEventListener("pointermove", move);
-        el.removeEventListener("pointerleave", leave);
-      });
+      document.removeEventListener("visibilitychange", setup);
+      document.removeEventListener("click", focusAnchor);
     };
   }, [pathname]);
   return <div className="reading-progress" aria-hidden="true" />;

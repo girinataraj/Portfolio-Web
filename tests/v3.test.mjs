@@ -16,7 +16,7 @@ test("preview builds fail closed for production, main and ambiguous Vercel conte
     assertPreview({
       VERCEL: "1",
       VERCEL_ENV: "preview",
-      VERCEL_GIT_COMMIT_REF: "codex/obsidian-v3-implementation",
+      VERCEL_GIT_COMMIT_REF: "codex/obsidian-v3-1",
     }),
   );
 });

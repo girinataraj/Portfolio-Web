@@ -6,7 +6,9 @@ import { Footer } from "@/components/portfolio";
 import { site } from "@/lib/portfolio";
 import { ExperienceMotion } from "@/components/experience-motion";
 import "./globals.css";
-import "./obsidian.css";
+import "./styles/portfolio.css";
+import "./styles/projects.css";
+import "./styles/explorers.css";
 import "./hero.css";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -75,7 +77,7 @@ export default function RootLayout({
     <html lang="en" id="top">
       <body className={`${GeistSans.variable} ${GeistMono.variable}`}>
         <noscript>
-          <style>{`.layer-controls,.system-instruction,.menu-toggle,.motion-toggle,.study-controls,.gallery-controls,.study-bottom>div{display:none!important}@media(max-width:760px){.header-inner{flex-wrap:wrap;height:auto;min-height:72px;row-gap:0;padding-block:16px}.desktop-nav{display:flex;order:5;width:100%;margin-left:0;gap:24px;padding-top:13px}.desktop-nav a{font-size:11px}}`}</style>
+          <style>{`.lumen-mode-controls,.lumen-wake,.motion-toggle,.study-controls,.gallery-controls,.study-bottom>div,.project-filters,.technology-switches,.career-track,.process-tabs,.lab-toolbar,.lab-ticket button,.retrieval-input,.retrieval-label,.retrieval-status,.retrieval-results,.query-examples{display:none!important}`}</style>
         </noscript>
         <a className="skip-link" href="#main-content">
           Skip to content

@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { ExternalLink, ProjectVisual } from "@/components/portfolio";
 import { ProjectStudy, QueueGallery } from "@/components/project-study";
+import { projectEvidence } from "@/lib/engineering";
 import { projects, site } from "@/lib/portfolio";
 import { pageMetadata } from "@/lib/metadata";
 export const dynamicParams = false;
@@ -35,6 +36,7 @@ export default async function ProjectPage({
   if (!project) notFound();
   const next = projects[(projects.indexOf(project) + 1) % projects.length];
   const company = !!project.organization;
+  const evidence = projectEvidence[slug];
   return (
     <article className={`case-study case-${project.accent}`}>
       <div className="container">
@@ -45,10 +47,10 @@ export default async function ProjectPage({
         <header className="case-header">
           <div className="case-eyebrow">
             <p className="eyebrow">{project.category}</p>
-            {project.status && (
+            {(project.status || evidence.status) && (
               <p className="case-status">
                 <span className="status-dot" />
-                {project.status}
+                {project.status || evidence.status}
               </p>
             )}
           </div>
@@ -106,7 +108,9 @@ export default async function ProjectPage({
           <p className="eyebrow">In this case study</p>
           <a href="#overview">01 / The context</a>
           <a href="#contribution">02 / My contribution</a>
-          <a href="#interaction">03 / {company ? "Product illustration" : "Inside the system"}</a>
+          <a href="#interaction">
+            03 / {company ? "Product illustration" : "Inside the system"}
+          </a>
           <a href="#boundaries">04 / Scope & boundaries</a>
         </aside>
         <div className="case-content">
@@ -171,7 +175,43 @@ export default async function ProjectPage({
               </figcaption>
             </figure>
           )}
-          <div id="interaction"><ProjectStudy slug={slug} /></div>
+          <div id="interaction">
+            <ProjectStudy slug={slug} />
+          </div>
+          {evidence?.decisions.length > 0 && (
+            <section className="case-decisions" id="decisions">
+              <p className="eyebrow">DECISIONS / DOCUMENTED ENGINEERING</p>
+              <h2>The choices that shape the system.</h2>
+              {evidence.decisions.map((d, i) => (
+                <article key={d.title}>
+                  <span className="decision-index">0{i + 1}</span>
+                  <div>
+                    <h3>{d.title}</h3>
+                    <p>{d.text}</p>
+                  </div>
+                </article>
+              ))}
+              {evidence.source && (
+                <ExternalLink className="text-link" href={evidence.source}>
+                  {evidence.sourceLabel} ↗
+                </ExternalLink>
+              )}
+            </section>
+          )}
+          <section className="case-availability">
+            <p className="eyebrow">STATUS & AVAILABILITY</p>
+            <h2>{evidence.status}</h2>
+            <p>
+              {company
+                ? "The application status is confirmed. This portfolio explains my contribution separately from the broader product and uses original conceptual illustrations."
+                : "This is the documented scope of the implementation. The illustrations on this page do not execute the original application or its external integrations."}
+            </p>
+            {company && evidence.source && (
+              <ExternalLink className="text-link" href={evidence.source}>
+                {evidence.sourceLabel} ↗
+              </ExternalLink>
+            )}
+          </section>
           <section className="scope-note" id="boundaries" data-reveal>
             <p className="eyebrow">
               {company ? "03" : "04"} / Scope & boundaries
