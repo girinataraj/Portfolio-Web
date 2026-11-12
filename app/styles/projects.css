@@ -994,7 +994,7 @@
     font-size: 68px;
   }
 }
-@media (max-width: 850px) {
+@media (max-width: 960px) {
   .case-body {
     grid-template-columns: 1fr;
     gap: 35px;
@@ -1013,6 +1013,7 @@
     margin-bottom: 8px;
   }
   .project-grid {
+    grid-template-columns: 1fr;
     gap: 55px 28px;
   }
   .project-card.card-saai-physiotherapy,
@@ -1035,12 +1036,16 @@
 }
 @media (max-width: 760px) {
   .project-grid {
-    grid-template-columns: 1fr;
     gap: 55px;
   }
   .project-visual,
   .project-visual.large {
     aspect-ratio: 1.2;
+  }
+  .project-visual.teal,
+  .project-visual.orange {
+    height: clamp(360px, 70vw, 500px);
+    aspect-ratio: auto;
   }
   .project-info h3 {
     font-size: 32px;
@@ -1052,6 +1057,12 @@
   .ai-cover,
   .large .ai-cover {
     padding: 28px;
+  }
+  .privacy-cover,
+  .large .privacy-cover {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px;
   }
   .queue-screens,
   .large .queue-screens {
@@ -1126,9 +1137,8 @@
   }
   .privacy-caption,
   .large .privacy-caption {
-    left: 28px;
-    right: 28px;
-    bottom: 65px;
+    position: static;
+    margin-top: auto;
     font-size: 11px;
   }
   .privacy-caption > span:last-child {
